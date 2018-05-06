@@ -1,8 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/users.controller');
+module.exports = (router, controller, models) => {
+  let User = models.User;
+  User.findAll().then(users => {
+    console.log(users);
+  });
 
-router.route('/')
-  .get(controller.index);
+  router.route('/')
+    .get(controller.index);
 
-module.exports = router;
+  return router;
+};
