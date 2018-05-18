@@ -23,8 +23,8 @@ function autoloadRoutes(routesDir, directory = '') {
         } else {
           const router = express.Router();
           const routeName = path.basename(file, '.route.js');
-          const controller = require(`../controllers/${directory}${routeName}.controller`);
-          const route = require(filePath)(router, controller, models);
+          const controller = require(`../controllers/${directory}${routeName}.controller`)(models);
+          const route = require(filePath)(router, controller);
 
           app.use(`/${directory}${routeName}`, route);
         }

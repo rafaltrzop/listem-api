@@ -1,12 +1,12 @@
-module.exports = (router, controller, models) => {
-  const User = models.User;
-
-  User.findAll().then(users => {
-    console.log(users);
-  });
-
+module.exports = (router, controller) => {
   router.route('/')
-    .get(controller.index);
+    .get(controller.index)
+    .post(controller.create);
+
+  router.route('/:id')
+    .get(controller.show)
+    .put(controller.update) // or patch?
+    .delete(controller.destroy);
 
   return router;
 };

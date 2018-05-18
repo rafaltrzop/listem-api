@@ -1,4 +1,4 @@
-module.exports = (router, controller, models) => {
+module.exports = (router, controller) => {
   router.route('/')
     .get(controller.index);
 

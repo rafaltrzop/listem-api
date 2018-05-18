@@ -1,6 +1,7 @@
-exports.index = (req, res) => {
-  res.json({
-    foo: 'foobar route',
-    bar: 1234
-  });
-};
+module.exports = (models) => ({
+  index(req, res) {
+    res.json({
+      data: 'index foobar'
+    });
+  }
+});
