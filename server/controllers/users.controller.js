@@ -7,6 +7,13 @@ module.exports = (models) => ({
     //   console.log(users);
     // });
 
+    // TODO
+    const User = models.User;
+    User.create({
+      email: 'test@gmail.com',
+      password: '123456'
+    });
+
     res.json({
       data: 'index user'
     });
