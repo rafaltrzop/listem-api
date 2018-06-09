@@ -7,21 +7,17 @@ module.exports = (models) => ({
     //   console.log(users);
     // });
 
-    // TODO
-    const User = models.User;
-    User.create({
-      email: 'test@gmail.com',
-      password: '123456'
-    });
-
     res.json({
       data: 'index user'
     });
   },
 
-  create(req, res) {
+  async create(req, res, next) {
+    // TODO: use valid JSON API response
     res.json({
-      data: 'create user'
+      data: {
+        user: req.user
+      }
     });
   },
 

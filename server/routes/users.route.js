@@ -1,8 +1,10 @@
+const passport = require('passport');
+
 module.exports = (router, controller) => {
   router.route('/')
-    .get(controller.index)
-    .post(controller.create);
+    .post(passport.authenticate('signup', {session: false}), controller.create);
 
+  // TODO
   router.route('/:id')
     .get(controller.show)
     .put(controller.update) // or patch?

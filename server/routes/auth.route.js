@@ -1,6 +1,6 @@
 module.exports = (router, controller) => {
   router.route('/')
-    .get(controller.index);
+    .post(controller.index);
 
   return router;
 };

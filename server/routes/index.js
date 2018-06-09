@@ -1,8 +1,9 @@
 const express = require('express');
-const app = express();
-const models = require('../models');
 const fs = require('fs');
 const path = require('path');
+
+const app = express();
+const models = require('../models');
 const basename = path.basename(__filename);
 
 autoloadRoutes(__dirname);
