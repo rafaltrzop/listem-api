@@ -2,13 +2,15 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
-const app = express();
+const publicRoutes = express();
+const privateRoutes = express();
 const models = require('../models');
 const basename = path.basename(__filename);
 
-autoloadRoutes(__dirname);
+autoloadRoutes(path.join(__dirname, 'public'), publicRoutes);
+autoloadRoutes(path.join(__dirname, 'private'), privateRoutes);
 
-function autoloadRoutes(routesDir, directory = '') {
+function autoloadRoutes(routesDir, app, directory = '') {
   fs
     .readdirSync(routesDir)
     .filter(file => {
@@ -20,7 +22,7 @@ function autoloadRoutes(routesDir, directory = '') {
       fs.stat(filePath, (err, stats) => {
         if (stats.isDirectory()) {
           const dir = `${directory}${file}/`;
-          autoloadRoutes(filePath, dir);
+          autoloadRoutes(filePath, app, dir);
         } else {
           const router = express.Router();
           const routeName = path.basename(file, '.route.js');
@@ -33,4 +35,7 @@ function autoloadRoutes(routesDir, directory = '') {
     });
 }
 
-module.exports = app;
+module.exports = {
+  publicRoutes,
+  privateRoutes
+};

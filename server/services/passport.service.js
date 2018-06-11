@@ -1,5 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const models = require('../models');
 const User = models.User;
@@ -35,5 +37,16 @@ passport.use('login', new LocalStrategy({
     return done(null, user, {message: 'Logged in successfully'}); // TODO: remove unnecessary message?
   } catch (error) {
     return done(error);
+  }
+}));
+
+passport.use(new JwtStrategy({
+  secretOrKey : 'top_secret', // TODO: use the same secret when signing
+  jwtFromRequest : ExtractJwt.fromUrlQueryParameter('secret_token')
+}, (token, done) => {
+  try {
+    return done(null, token.user);
+  } catch (error) {
+    done(error);
   }
 }));

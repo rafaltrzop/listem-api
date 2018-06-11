@@ -12,8 +12,8 @@ module.exports = (models) => ({
     });
   },
 
-  async create(req, res, next) {
-    // TODO: use valid JSON API response
+  create(req, res) {
+    // TODO: use valid JSON API response, send back only some fields?
     res.json({
       data: {
         user: req.user

@@ -1,7 +1,10 @@
 module.exports = (models) => ({
-  index(req, res) {
+  // TODO
+  index(req, res, next) {
     res.json({
-      data: 'index foobar'
-    });
+      message : 'You made it to the secure route',
+      user : req.user,
+      token : req.query.secret_token
+    })
   }
 });

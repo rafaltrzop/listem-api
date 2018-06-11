@@ -20,7 +20,24 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
-app.use('/api', routes);
+app.use('/api', routes.publicRoutes);
+app.use('/api', (req, res, next) => {
+  passport.authenticate('jwt', {session: false}, (error, user, info) => {
+    if (error) return next(error);
+
+    if (!user) {
+      return res.status(401).json({
+        errors: [
+          {
+            title: 'Missing or wrong token' // TODO: change message
+          }
+        ]
+      });
+    }
+
+    next();
+  })(req, res, next);
+}, routes.privateRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -29,20 +46,11 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // // set locals, only providing error in development
-  // res.locals.message = err.message;
-  // res.locals.error = req.app.get('env') === 'development' ? err : {};
-  //
-  // // render the error page
-  // res.status(err.status || 500);
-  // res.render('error');
-
   console.log('%%%%%%%%%%%%%%%%%%%', err); // TODO: remove later
 
-  res.json({
+  res.status(500).json({
     errors: [
       {
-        status: 500,
         title: err.message,
         detail: err.stack
       }
