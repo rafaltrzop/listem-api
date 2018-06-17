@@ -2,9 +2,9 @@
 
 module.exports = {
   development: {
-    username: 'postgres',
-    password: 'postgres',
-    database: 'listem',
+    username: process.env.DEV_DB_USERNAME,
+    password: process.env.DEV_DB_PASSWORD,
+    database: process.env.DEV_DB_NAME,
     host: '127.0.0.1',
     dialect: 'postgres',
     operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security

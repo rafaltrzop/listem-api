@@ -6,6 +6,7 @@ const logger = require('morgan');
 const passport = require('passport');
 
 const app = express();
+require('dotenv').config();
 const routes = require('./routes');
 require('./services/passport.service');
 

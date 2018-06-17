@@ -27,7 +27,7 @@ module.exports = (models) => ({
               email: user.email
             }
           };
-          const secret = 'top_secret'; // TODO: keep it somewhere safe
+          const secret = process.env.JWT_SECRET;
           const token = jwt.sign(payload, secret); // TODO: set options https://github.com/auth0/node-jsonwebtoken
 
           return res.json({
