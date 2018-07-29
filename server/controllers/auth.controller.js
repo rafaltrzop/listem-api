@@ -11,34 +11,34 @@ module.exports = (models) => ({
           return res.status(401).json({
             errors: [
               {
-                title: info.message
-              }
-            ]
+                title: info.message,
+              },
+            ],
           });
         }
 
-        req.login(user, {session: false}, (error) => {
+        req.login(user, { session: false }, (error) => {
           if (error) return next(error);
 
           // TODO: verify payload structure, send only user id?
           const payload = {
             user: {
               id: user.id,
-              email: user.email
-            }
+              email: user.email,
+            },
           };
           const secret = process.env.JWT_SECRET;
           const token = jwt.sign(payload, secret); // TODO: set options https://github.com/auth0/node-jsonwebtoken
 
           return res.json({
             data: {
-              token
-            }
+              token,
+            },
           });
         });
       } catch (error) {
         return next(error);
       }
     })(req, res, next);
-  }
+  },
 });

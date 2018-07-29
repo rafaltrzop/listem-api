@@ -19,7 +19,7 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -27,16 +27,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use('/api', routes.publicRoutes);
 app.use('/api', (req, res, next) => {
-  passport.authenticate('jwt', {session: false}, (error, user, info) => {
+  passport.authenticate('jwt', { session: false }, (error, user, info) => {
     if (error) return next(error);
 
     if (!user) {
       return res.status(401).json({
         errors: [
           {
-            title: 'Missing or wrong token' // TODO: change message
-          }
-        ]
+            title: 'Missing or wrong token', // TODO: change message
+          },
+        ],
       });
     }
 
@@ -57,9 +57,9 @@ app.use((err, req, res, next) => {
     errors: [
       {
         title: err.message,
-        detail: err.stack
-      }
-    ]
+        detail: err.stack,
+      },
+    ],
   });
 });
 

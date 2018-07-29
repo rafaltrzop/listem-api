@@ -2,7 +2,7 @@ const passport = require('passport');
 
 module.exports = (router, controller) => {
   router.route('/')
-    .post(passport.authenticate('signup', {session: false}), controller.create);
+    .post(passport.authenticate('signup', { session: false }), controller.create);
 
   // TODO
   router.route('/:id')

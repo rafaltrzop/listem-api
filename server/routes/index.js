@@ -37,5 +37,5 @@ function autoloadRoutes(routesDir, app, directory = '') {
 
 module.exports = {
   publicRoutes,
-  privateRoutes
+  privateRoutes,
 };

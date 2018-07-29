@@ -7,7 +7,7 @@ module.exports = {
     database: process.env.DEV_DB_NAME,
     host: '127.0.0.1',
     dialect: 'postgres',
-    operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
+    operatorsAliases: false, // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
   },
 
   // TODO: CI configuration
@@ -17,7 +17,7 @@ module.exports = {
   //   database: process.env.CI_DB_NAME,
   //   host: '127.0.0.1',
   //   dialect: 'postgres',
-  //   operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
+  //   operatorsAliases: false, // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
   // },
 
   // TODO: production configuration
@@ -27,11 +27,11 @@ module.exports = {
   //   database: process.env.PROD_DB_NAME,
   //   host: process.env.PROD_DB_HOSTNAME,
   //   dialect: 'postgres',
-  //   operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
+  //   operatorsAliases: false, // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
   //   dialectOptions: {
   //     ssl: {
-  //       ca: fs.readFileSync(__dirname + '/mysql-ca-master.crt')
-  //     }
-  //   }
-  // }
+  //       ca: fs.readFileSync(`${__dirname}/mysql-ca-master.crt`),
+  //     },
+  //   },
+  // },
 };

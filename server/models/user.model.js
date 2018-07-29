@@ -8,23 +8,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: true,
-        isEmail: true
-      }
+        isEmail: true,
+      },
     },
     password: {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
-      }
-    }
+        notEmpty: true,
+      },
+    },
   }, {
     hooks: {
       async beforeCreate(user) {
         const saltRounds = 12;
         user.password = await bcrypt.hash(user.password, saltRounds);
-      }
-    }
+      },
+    },
   });
 
   // TODO
@@ -32,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
   // User.associate = (models) => {
   // };
 
-  User.prototype.isValidPassword = async function(password) {
+  User.prototype.isValidPassword = async function (password) {
     const user = this;
-    return await bcrypt.compare(password, user.password);
+    return bcrypt.compare(password, user.password);
   };
 
   return User;
