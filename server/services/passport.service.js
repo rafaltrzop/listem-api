@@ -4,6 +4,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 
 const models = require('../models');
+
 const { User } = models;
 
 passport.use('signup', new LocalStrategy({
@@ -41,7 +42,7 @@ passport.use('login', new LocalStrategy({
 }));
 
 passport.use(new JwtStrategy({
-  secretOrKey: 'top_secret', // TODO: use the same secret when signing
+  secretOrKey: process.env.JWT_SECRET,
   jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token'),
 }, (token, done) => {
   try {
