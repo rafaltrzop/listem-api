@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "./node_modules/.bin/nodemon ./bin/www",
+    "start:dev": "nodemon ./bin/www",
     "start:prod": "node ./bin/www",
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "bcrypt": "^2.0.1",
