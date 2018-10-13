@@ -1,8 +1,16 @@
 # Listem API
 
+## Setup
+
+Install dependencies:
+
+```
+$ npm install
+```
+
 ## Environment variables
 
-Copy example file and edit it providing correct data.
+Copy example file and edit it providing correct data:
 
 ```
 $ cp .env.example .env
