@@ -1,0 +1,21 @@
+{
+  "name": "listem",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently -n server,client \"npm run start:server\" \"npm run start:client\"",
+    "start:server": "npm start --prefix server",
+    "start:client": "npm start --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaltrzop/listem2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rafaltrzop/listem2/issues"
+  },
+  "homepage": "https://github.com/rafaltrzop/listem2#readme",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
