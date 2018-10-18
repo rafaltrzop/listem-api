@@ -5,14 +5,19 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
 const app = express();
+const swaggerDocument = YAML.load('./swagger.yaml');
+
 require('dotenv').config();
 const routes = require('./routes');
 require('./services/passport.service');
 
 app.use(helmet());
 
+// TODO: remove?
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -22,9 +27,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // TODO: remove?
 
 app.use(passport.initialize());
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', routes.publicRoutes);
 app.use('/api', (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (error, user, info) => {
@@ -51,8 +57,6 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  console.log('%%%%%%%%%%%%%%%%%%%', err); // TODO: remove later
-
   res.status(500).json({
     errors: [
       {
