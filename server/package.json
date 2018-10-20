@@ -7,7 +7,7 @@
     "start": "npm run start:dev",
     "start:dev": "nodemon -e js,json,yaml",
     "start:prod": "node .",
-    "lint": "eslint ."
+    "lint": "eslint bin/** ."
   },
   "dependencies": {
     "bcrypt": "^3.0.1",
