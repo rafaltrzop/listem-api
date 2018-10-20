@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // TODO: remove?
 
 app.use(passport.initialize());
-app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', routes.publicRoutes);
 app.use('/api', (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (error, user, info) => {
