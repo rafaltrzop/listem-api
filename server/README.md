@@ -1,6 +1,6 @@
 # Listem API
 
-## Setup
+## Dependencies
 
 Install dependencies:
 
@@ -22,11 +22,21 @@ $ vim .env
 1. Create database:
 
     ```
-    $ node_modules/.bin/sequelize db:create
+    $ $(npm bin)/sequelize db:create
     ```
 
 2. Run all migrations:
 
     ```
-    $ node_modules/.bin/sequelize db:migrate
+    $ $(npm bin)/sequelize db:migrate
     ```
+
+## Documentation
+
+1. Run server:
+
+    ```
+    $ npm start
+    ```
+
+2. Explore API docs at [http://localhost:3001/api-docs/](http://localhost:3001/api-docs/)
