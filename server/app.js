@@ -61,7 +61,7 @@ app.use((err, req, res, next) => {
     errors: [
       {
         title: err.message,
-        detail: err.stack,
+        detail: err.stack.split('\n'),
       },
     ],
   });
