@@ -59,15 +59,64 @@ paths:
                       token:
                         type: string
                         description: Access token (JWT)
+                    required:
+                      - token
+                required:
+                  - data
 #        externalDocs:
 #          description: Learn more about user operations provided by this API.
 #          url: http://api.example.com/docs/user-operations/
         '401':
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
   /users:
     post:
       summary: Create a user account
-#      description: Endpoint desc relevant to all operations in this path
-#      responses:
-#        '201':
-#          description: Created
+      # TODO: extract to components and use here and in /auth
+      requestBody:
+        description: User credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+      responses:
+        '201':
+          description: Created
+        '500':
+          description: Internal Server Error
+
+components:
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Error message
+              detail:
+                type: string
+                description: Stack trace
+            required:
+              - title
+      required:
+        - errors
