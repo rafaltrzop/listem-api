@@ -13,7 +13,7 @@ passport.use('signup', new LocalStrategy({
 }, async (email, password, done) => {
   try {
     const user = await User.create({ email, password });
-    return done(null, user);
+    return done(null, { id: user.id, email: user.email });
   } catch (error) {
     done(error);
   }

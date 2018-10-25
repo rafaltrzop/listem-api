@@ -28,23 +28,7 @@ paths:
       summary: Authenticate user
 #      description: Endpoint desc relevant to all operations in this path
       requestBody:
-        description: User credentials
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-                - email
-                - password
-#            example:
-#              email: email@address.com
-#              password: paSSw0rd
+        $ref: '#/components/requestBodies/UserCredentials'
       responses:
         '200':
           description: OK
@@ -59,41 +43,71 @@ paths:
                       token:
                         type: string
                         description: Access token (JWT)
+#                    example:
+#                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                     required:
                       - token
                 required:
                   - data
-#        externalDocs:
-#          description: Learn more about user operations provided by this API.
-#          url: http://api.example.com/docs/user-operations/
         '401':
           $ref: '#/components/responses/Unauthorized'
   /users:
     post:
       summary: Create a user account
-      # TODO: extract to components and use here and in /auth
       requestBody:
-        description: User credentials
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-              - email
-              - password
+        $ref: '#/components/requestBodies/UserCredentials'
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          email:
+                            type: string
+                        required:
+                          - id
+                          - email
+                    required:
+                      - user
+                required:
+                  - data
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
+  requestBodies:
+    UserCredentials:
+      description: User credentials
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+            required:
+              - email
+              - password
+#          example:
+#            email: email@address.com
+#            password: paSSw0rd
   responses:
     Unauthorized:
       description: Unauthorized
