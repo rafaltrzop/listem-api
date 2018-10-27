@@ -9,6 +9,10 @@ servers:
   - url: /api
 #    description: Server description
 
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+
 #tags:
 #  - name: abc
 #    description: Everything about your Pets
@@ -27,6 +31,7 @@ paths:
 #        - abc
       summary: Authenticate user
 #      description: Endpoint desc relevant to all operations in this path
+      security: []
       requestBody:
         $ref: '#/components/requestBodies/UserCredentials'
       responses:
@@ -50,10 +55,11 @@ paths:
                 required:
                   - data
         '401':
-          $ref: '#/components/responses/Unauthorized'
+          $ref: '#/components/responses/UnauthorizedError'
   /users:
     post:
       summary: Create a user account
+      security: []
       requestBody:
         $ref: '#/components/requestBodies/UserCredentials'
       responses:
@@ -87,8 +93,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  # TODO: remove later
+  /foo/bar:
+    get:
+      responses:
+        '200':
+          description: OK
 
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: token
   requestBodies:
     UserCredentials:
       description: User credentials
@@ -100,6 +121,7 @@ components:
             properties:
               email:
                 type: string
+#                example: inline@example.com
               password:
                 type: string
             required:
@@ -109,7 +131,7 @@ components:
 #            email: email@address.com
 #            password: paSSw0rd
   responses:
-    Unauthorized:
+    UnauthorizedError:
       description: Unauthorized
       content:
         application/json:

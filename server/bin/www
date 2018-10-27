@@ -51,6 +51,7 @@ function onError(error) {
   }
 }
 
+// TODO: check NODE_ENV and run this only in development
 function onListening() {
   browserSync.init({
     ui: false,
