@@ -12,7 +12,9 @@ const server = http.createServer(app);
 
 server.listen(port);
 server.on('error', onError);
-server.on('listening', onListening);
+if (process.env.NODE_ENV === 'development') {
+  server.on('listening', onListening);
+}
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
@@ -51,7 +53,6 @@ function onError(error) {
   }
 }
 
-// TODO: check NODE_ENV and run this only in development
 function onListening() {
   browserSync.init({
     ui: false,
