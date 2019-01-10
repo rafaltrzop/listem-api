@@ -21,22 +21,22 @@ $ vim .env
 
 1. Create database:
 
-    ```
-    $ $(npm bin)/sequelize db:create
-    ```
+   ```
+   $ npx sequelize db:create
+   ```
 
 2. Run all migrations:
 
-    ```
-    $ $(npm bin)/sequelize db:migrate
-    ```
+   ```
+   $ npx sequelize db:migrate
+   ```
 
 ## Documentation
 
 1. Run server:
 
-    ```
-    $ npm start
-    ```
+   ```
+   $ npm start
+   ```
 
 2. Explore API docs at [http://localhost:3001/api-docs/](http://localhost:3001/api-docs/)
