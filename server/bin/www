@@ -35,9 +35,7 @@ function onError(error) {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? `Pipe ${port}`
-    : `Port ${port}`;
+  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
 
   switch (error.code) {
     case 'EACCES':
@@ -54,13 +52,16 @@ function onError(error) {
 }
 
 function onListening() {
-  browserSync.init({
-    ui: false,
-    notify: false,
-    online: false,
-    open: false,
-    startPath: '/api-docs',
-    proxy: `localhost:${port}`,
-    port: port + 1,
-  }, browserSync.reload);
+  browserSync.init(
+    {
+      ui: false,
+      notify: false,
+      online: false,
+      open: false,
+      startPath: '/api-docs',
+      proxy: `localhost:${port}`,
+      port: port + 1,
+    },
+    browserSync.reload,
+  );
 }
