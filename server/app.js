@@ -29,27 +29,35 @@ app.use(express.static(path.join(__dirname, 'public'))); // TODO: remove?
 
 app.use(passport.initialize());
 app.use('/api', routes.publicRoutes);
-app.use('/api', (req, res, next) => {
-  passport.authenticate('jwt', { session: false }, (error, user, info) => {
-    if (error) return next(error);
+app.use(
+  '/api',
+  (req, res, next) => {
+    passport.authenticate('jwt', { session: false }, (error, user, info) => {
+      if (error) return next(error);
 
-    if (!user) {
-      return res.status(401).json({
-        errors: [
-          {
-            title: 'Missing or wrong token', // TODO: change message
-          },
-        ],
-      });
-    }
+      if (!user) {
+        return res.status(401).json({
+          errors: [
+            {
+              title: 'Missing or wrong token', // TODO: change message
+            },
+          ],
+        });
+      }
 
-    next();
-  })(req, res, next);
-}, routes.privateRoutes);
+      next();
+    })(req, res, next);
+  },
+  routes.privateRoutes,
+);
 
 if (process.env.NODE_ENV === 'development') {
   const swaggerDocument = YAML.load('./swagger.yaml');
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customSiteTitle: 'Listem API' }));
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument, { customSiteTitle: 'Listem API' }),
+  );
 }
 
 // catch 404 and forward to error handler
