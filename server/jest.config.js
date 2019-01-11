@@ -6,6 +6,7 @@ module.exports = {
     '!coverage/**',
     '!migrations/**',
     '!models/**',
+    '!routes/**',
     '!jest.config.js',
   ],
 };
