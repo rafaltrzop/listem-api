@@ -8,9 +8,9 @@
     "start:dev": "nodemon -e js,json,yaml",
     "start:prod": "node .",
     "lint": "eslint bin/** .",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test": "jest --runInBand",
+    "test:watch": "npm test -- --watch",
+    "test:coverage": "npm test -- --coverage"
   },
   "dependencies": {
     "bcrypt": "^3.0.3",

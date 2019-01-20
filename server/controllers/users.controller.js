@@ -1,6 +1,6 @@
 module.exports = models => ({
+  // TODO
   index(req, res) {
-    // TODO
     // const User = models.User;
     //
     // User.findAll().then(users => {
@@ -24,18 +24,21 @@ module.exports = models => ({
     });
   },
 
+  // TODO
   show(req, res) {
     res.json({
       data: 'show user',
     });
   },
 
+  // TODO
   update(req, res) {
     res.json({
       data: 'update user',
     });
   },
 
+  // TODO
   destroy(req, res) {
     res.json({
       data: 'destroy user',

@@ -96,15 +96,6 @@ describe('POST /api/auth', () => {
 
   // TODO: global afterEach clean database?
   afterEach(async () => {
-    // drop and recreate given table
-    // User.sync({ force: true });
-
-    // truncate given table
-    // User.truncate();
-
-    // run .sync() only if database name ends with '_test'
-    // await sequelize.sync({ force: true, match: /_test$/ });
-
     await sequelize.truncate();
   });
 
