@@ -1,4 +1,6 @@
 module.exports = {
+  testRegex: '/__tests__/.*(test|spec)\\.js$',
+  setupTestFrameworkScriptFile: '<rootDir>/__tests__/__config__/setupTestFrameworkScriptFile.js',
   collectCoverageFrom: [
     '**/*.{js}',
     // 'bin/www', // TODO: collecting coverage from an extensionless file is not working https://github.com/facebook/jest/issues/3674

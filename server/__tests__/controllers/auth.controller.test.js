@@ -4,7 +4,7 @@ const faker = require('faker');
 const app = require('../../app');
 const models = require('../../models');
 
-const { sequelize, User } = models;
+const { User } = models;
 const {
   internet: { email, password },
 } = faker;
@@ -92,14 +92,5 @@ describe('POST /api/auth', () => {
           done();
         });
     });
-  });
-
-  // TODO: global afterEach clean database?
-  afterEach(async () => {
-    await sequelize.truncate();
-  });
-
-  afterAll(async () => {
-    await sequelize.close();
   });
 });
