@@ -1,6 +1,4 @@
-require('dotenv').config();
-
-// const app = require('../../app'); // TODO: already requires dotenv config
+// const app = require('../../app');
 const models = require('../../models');
 
 const { sequelize } = models;
