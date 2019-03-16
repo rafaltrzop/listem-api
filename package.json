@@ -1,5 +1,5 @@
 {
-  "name": "listem-server",
+  "name": "listem-api",
   "version": "0.0.0",
   "main": "bin/www",
   "private": true,
@@ -12,14 +12,6 @@
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rafaltrzop/listem2.git"
-  },
-  "bugs": {
-    "url": "https://github.com/rafaltrzop/listem2/issues"
-  },
-  "homepage": "https://github.com/rafaltrzop/listem2#readme",
   "dependencies": {
     "bcrypt": "^3.0.3",
     "browser-sync": "^2.26.3",
