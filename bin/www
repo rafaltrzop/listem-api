@@ -5,17 +5,6 @@ const browserSync = require('browser-sync').create();
 
 const app = require('../app');
 
-const port = normalizePort(process.env.PORT);
-app.set('port', port);
-
-const server = http.createServer(app);
-
-server.listen(port);
-server.on('error', onError);
-if (process.env.NODE_ENV === 'development') {
-  server.on('listening', onListening);
-}
-
 function normalizePort(val) {
   const port = parseInt(val, 10);
 
@@ -29,6 +18,9 @@ function normalizePort(val) {
 
   return false;
 }
+
+const port = normalizePort(process.env.PORT);
+app.set('port', port);
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -64,4 +56,12 @@ function onListening() {
     },
     browserSync.reload,
   );
+}
+
+const server = http.createServer(app);
+
+server.listen(port);
+server.on('error', onError);
+if (process.env.NODE_ENV === 'development') {
+  server.on('listening', onListening);
 }

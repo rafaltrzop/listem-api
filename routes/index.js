@@ -1,3 +1,5 @@
+/* eslint-disable global-require, import/no-dynamic-require */
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -9,9 +11,8 @@ const privateRoutes = express();
 const basename = path.basename(__filename);
 
 function autoloadRoutes(routesDir, app, directory = '') {
-  fs
-    .readdirSync(routesDir)
-    .filter(file => (file.indexOf('.') !== 0) && (file !== basename))
+  fs.readdirSync(routesDir)
+    .filter(file => file.indexOf('.') !== 0 && file !== basename)
     .forEach((file) => {
       const filePath = `${routesDir}/${file}`;
 

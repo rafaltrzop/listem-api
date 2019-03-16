@@ -17,8 +17,8 @@ module.exports = models => ({
           });
         }
 
-        req.login(user, { session: false }, (error) => {
-          if (error) return next(error);
+        req.login(user, { session: false }, (err) => {
+          if (err) return next(err);
 
           // TODO: verify payload structure, send only user id?
           const payload = {
@@ -36,8 +36,8 @@ module.exports = models => ({
             },
           });
         });
-      } catch (error) {
-        return next(error);
+      } catch (err) {
+        return next(err);
       }
     })(req, res, next);
   },
