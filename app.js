@@ -10,13 +10,13 @@ const YAML = require('yamljs');
 
 const app = express();
 require('dotenv').config();
-const routes = require('./routes');
-require('./services/passport.service');
+const routes = require('./src/routes');
+require('./src/services/passport.service');
 
 app.use(helmet());
 
 // TODO: remove?
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public'))); // TODO: remove?
+app.use(express.static(path.join(__dirname, 'src/public'))); // TODO: remove?
 
 app.use(passport.initialize());
 app.use('/api', routes.publicRoutes);
@@ -52,7 +52,7 @@ app.use(
 );
 
 if (process.env.NODE_ENV === 'development') {
-  const swaggerDocument = YAML.load('./swagger.yaml');
+  const swaggerDocument = YAML.load('./docs/swagger.yaml');
   app.use(
     '/api-docs',
     swaggerUi.serve,

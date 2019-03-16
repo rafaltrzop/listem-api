@@ -78,4 +78,4 @@ $ npm start
 
 2. Explore API docs at [http://localhost:3001/api-docs/](http://localhost:3001/api-docs/)
 
-3. Edit `swagger.yaml` file to update API docs.
+3. Edit `docs/swagger.yaml` file to update API docs.

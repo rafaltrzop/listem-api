@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const models = require('../../models');
+const models = require('../../src/models');
 
 const { sequelize } = models;
 

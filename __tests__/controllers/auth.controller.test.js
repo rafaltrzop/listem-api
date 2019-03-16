@@ -2,7 +2,7 @@ const request = require('supertest');
 const faker = require('faker');
 
 const app = require('../../app');
-const models = require('../../models');
+const models = require('../../src/models');
 
 const { User } = models;
 const {
