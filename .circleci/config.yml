@@ -18,7 +18,9 @@ jobs:
             - v2-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v2-dependencies-
-      - run: npm install
+      - run:
+          name: Install dependencies
+          command: npm install
       - save_cache:
           paths:
             - node_modules
@@ -38,7 +40,9 @@ jobs:
             - v2-dependencies-{{ checksum "package.json" }}
 
       # run code linters
-      - run: npm run lint
+      - run:
+          name: Run code linters
+          command: npm run lint
 
   test:
     docker:
@@ -54,7 +58,9 @@ jobs:
             - v2-dependencies-{{ checksum "package.json" }}
 
       # run tests and generate code coverage report
-      - run: npm run test:coverage
+      - run:
+          name: Run tests and generate code coverage report
+          command: npm run test:coverage
 
       # save code coverage report as artifact
       - store_artifacts:
