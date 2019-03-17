@@ -57,6 +57,11 @@ jobs:
           keys:
             - v2-dependencies-{{ checksum "package.json" }}
 
+      # provide environment variables
+      - run:
+          name: Provide environment variables
+          command: cp .env.example .env
+
       # run tests and generate code coverage report
       - run:
           name: Run tests and generate code coverage report
