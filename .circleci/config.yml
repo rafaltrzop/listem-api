@@ -47,6 +47,12 @@ jobs:
   test:
     docker:
       - image: circleci/node:10
+        environment:
+          NODE_ENV: test
+      - image: circleci/postgres:11-alpine-ram
+        environment:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
 
     steps:
       # check out source code to working directory
@@ -61,6 +67,21 @@ jobs:
       - run:
           name: Provide environment variables
           command: cp .env.example .env
+
+      # ensure database is available
+      - run:
+          name: Wait for database
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # create database
+      - run:
+          name: Create test database
+          command: npx sequelize db:create
+
+      # run database migrations
+      - run:
+          name: Run database migrations
+          command: npx sequelize db:migrate
 
       # run tests and generate code coverage report
       - run:
