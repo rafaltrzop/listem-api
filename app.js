@@ -5,7 +5,8 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
+const yaml = require('js-yaml');
+const fs = require('fs');
 
 const app = express();
 require('dotenv').config();
@@ -44,7 +45,7 @@ app.use(
 );
 
 if (process.env.NODE_ENV === 'development') {
-  const swaggerDocument = YAML.load('./docs/swagger.yaml');
+  const swaggerDocument = yaml.safeLoad(fs.readFileSync('./docs/swagger.yaml', 'utf8'));
   app.use(
     '/api-docs',
     swaggerUi.serve,
