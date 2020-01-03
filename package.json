@@ -13,7 +13,7 @@
     "test:coverage": "npm test -- --coverage"
   },
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^3.0.7",
     "browser-sync": "^2.26.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^7.0.0",
