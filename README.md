@@ -4,6 +4,7 @@
 
 - [Node.js](https://nodejs.org/) - JavaScript runtime
 - [npm](https://www.npmjs.com/) - dependency manager
+- [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools/) - Build Tools for Windows
 
 ## Setup
 
