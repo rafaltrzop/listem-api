@@ -1,10 +1,5 @@
 {
-  "ignore": [
-    "__tests__"
-  ],
-  "watch": [
-    ".",
-    ".env"
-  ],
+  "ignore": ["__tests__"],
+  "watch": [".", ".env"],
   "ext": "js,json,yml"
 }
