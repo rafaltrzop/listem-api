@@ -12,7 +12,7 @@ const basename = path.basename(__filename);
 
 function autoloadRoutes(routesDir, app, directory = '') {
   fs.readdirSync(routesDir)
-    .filter(file => file.indexOf('.') !== 0 && file !== basename)
+    .filter((file) => file.indexOf('.') !== 0 && file !== basename)
     .forEach((file) => {
       const filePath = `${routesDir}/${file}`;
 

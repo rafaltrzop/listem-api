@@ -1,4 +1,4 @@
-module.exports = models => ({
+module.exports = (models) => ({
   // TODO
   index(req, res) {
     // const User = models.User;

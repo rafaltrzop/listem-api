@@ -1,7 +1,7 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-module.exports = models => ({
+module.exports = (models) => ({
   index(req, res, next) {
     passport.authenticate('login', (error, user, info) => {
       try {

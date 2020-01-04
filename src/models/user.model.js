@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         async beforeCreate(user) {
           const saltRounds = 12;
+          // eslint-disable-next-line no-param-reassign
           user.password = await bcrypt.hash(user.password, saltRounds);
         },
       },
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   // User.associate = (models) => {
   // };
 
-  User.prototype.isValidPassword = async function (password) {
+  User.prototype.isValidPassword = async function isValidPassword(password) {
     const user = this;
     return bcrypt.compare(password, user.password);
   };
