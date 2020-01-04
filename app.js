@@ -45,7 +45,7 @@ app.use(
 );
 
 if (process.env.NODE_ENV === 'development') {
-  const swaggerDocument = yaml.safeLoad(fs.readFileSync('./docs/swagger.yaml', 'utf8'));
+  const swaggerDocument = yaml.safeLoad(fs.readFileSync('./docs/swagger.yml', 'utf8'));
   app.use(
     '/api-docs',
     swaggerUi.serve,

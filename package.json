@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "nodemon -e js,json,yaml",
+    "start:dev": "nodemon",
     "start:prod": "node .",
     "lint": "eslint bin/** .",
     "test": "jest --runInBand",
