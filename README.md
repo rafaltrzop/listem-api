@@ -42,7 +42,24 @@ $ vim .env
    $ NODE_ENV=test npx sequelize db:migrate
    ```
 
-### Development
+### IDE
+
+IntelliJ IDEA / WebStorm / PhpStorm:
+
+1. Install the following plugins:
+
+   - [File Watchers](https://plugins.jetbrains.com/plugin/7177-file-watchers)
+   - [Prettier](https://plugins.jetbrains.com/plugin/10456-prettier)
+   - [EditorConfig](https://plugins.jetbrains.com/plugin/7294-editorconfig)
+   - [.ignore](https://plugins.jetbrains.com/plugin/7495--ignore)
+
+2. Go to `File > Settings > Tools > File Watchers`
+
+   Click `Import` button and select `watchers.xml` file from the repository.
+
+From now on every change in code base will be automatically formatted by [Prettier](https://prettier.io/). [ESLint](https://eslint.org/) errors will be also automatically fixed on every file save.
+
+## Development
 
 Run server and start hacking:
 
@@ -50,7 +67,7 @@ Run server and start hacking:
 $ npm start
 ```
 
-### Tests
+## Tests
 
 1. Run tests:
 
@@ -70,7 +87,7 @@ $ npm start
    $ npm run test:coverage
    ```
 
-### Documentation
+## Documentation
 
 1. Run server:
 
@@ -80,4 +97,4 @@ $ npm start
 
 2. Explore API docs at [http://localhost:3001/api-docs/](http://localhost:3001/api-docs/)
 
-3. Edit `docs/swagger.yaml` file to update API docs.
+3. Edit `docs/swagger.yml` file to update API docs.
