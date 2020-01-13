@@ -40,15 +40,21 @@ passport.use(
         });
 
         if (!user) {
-          return done(null, false, { message: 'User not found' }); // TODO: change message
+          return done(null, false, {
+            code: 'WRONG_CREDENTIALS',
+            title: 'Incorrect username or password',
+          });
         }
 
         const validate = await user.isValidPassword(password);
         if (!validate) {
-          return done(null, false, { message: 'Wrong password' }); // TODO: change message
+          return done(null, false, {
+            code: 'WRONG_CREDENTIALS',
+            title: 'Incorrect username or password',
+          });
         }
 
-        return done(null, user, { message: 'Logged in successfully' }); // TODO: remove unnecessary message?
+        return done(null, user);
       } catch (error) {
         return done(error);
       }

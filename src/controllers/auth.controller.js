@@ -11,7 +11,8 @@ module.exports = (models) => ({
           return res.status(401).json({
             errors: [
               {
-                title: info.message,
+                code: info.code,
+                title: info.title,
               },
             ],
           });
