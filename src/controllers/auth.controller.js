@@ -1,5 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const uuidv4 = require('uuid/v4');
 
 module.exports = (models) => ({
   index(req, res, next) {
@@ -21,7 +22,9 @@ module.exports = (models) => ({
         req.login(user, { session: false }, (err) => {
           if (err) return next(err);
 
-          // TODO: verify payload structure, send only user id?
+          // TODO: what should be in the payload?
+          //  - is it safe to store user id in JWT?
+          //  - what if user changes email address?
           const payload = {
             user: {
               id: user.id,
@@ -29,11 +32,16 @@ module.exports = (models) => ({
             },
           };
           const secret = process.env.JWT_SECRET;
-          const token = jwt.sign(payload, secret); // TODO: set options https://github.com/auth0/node-jsonwebtoken
+          const options = {
+            expiresIn: '3m',
+          };
+          const accessToken = jwt.sign(payload, secret, options);
 
           return res.json({
             data: {
-              token,
+              accessToken,
+              // TODO: save access token and refresh token in database
+              refreshToken: uuidv4(),
             },
           });
         });
