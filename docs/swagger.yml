@@ -2,7 +2,7 @@ openapi: 3.0.2
 
 info:
   title: Listem API
-#  description: API description
+  #description: API description
   version: 0.0.0
 
 servers:
@@ -26,16 +26,16 @@ security:
 paths:
   /auth:
     post:
-#      tags:
-#        - xyz
-#        - abc
+      #tags:
+      #  - xyz
+      #  - abc
       summary: Authenticate user
-#      description: Endpoint desc relevant to all operations in this path
+      #description: Endpoint desc relevant to all operations in this path
       security: []
       requestBody:
-        $ref: '#/components/requestBodies/UserCredentials'
+        $ref: "#/components/requestBodies/UserCredentials"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -45,25 +45,26 @@ paths:
                   data:
                     type: object
                     properties:
-                      token:
+                      accessToken:
                         type: string
                         description: Access token (JWT)
-#                    example:
-#                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                      refreshToken:
+                        type: string
+                        description: Refresh token (UUID)
                     required:
                       - token
                 required:
                   - data
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
   /users:
     post:
       summary: Create a user account
       security: []
       requestBody:
-        $ref: '#/components/requestBodies/UserCredentials'
+        $ref: "#/components/requestBodies/UserCredentials"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
@@ -87,17 +88,17 @@ paths:
                       - user
                 required:
                   - data
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   # TODO: remove later
   /foo/bar:
     get:
       responses:
-        '200':
+        "200":
           description: OK
 
 components:
@@ -109,7 +110,7 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: query
-      name: token
+      name: accessToken
   requestBodies:
     UserCredentials:
       description: User credentials
@@ -121,22 +122,22 @@ components:
             properties:
               email:
                 type: string
-#                example: inline@example.com
+                # example: inline@example.com
               password:
                 type: string
             required:
               - email
               - password
-#          example:
-#            email: email@address.com
-#            password: paSSw0rd
+          #example:
+          #  email: email@address.com
+          #  password: paSSw0rd
   responses:
     UnauthorizedError:
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
   schemas:
     Error:
       type: object
