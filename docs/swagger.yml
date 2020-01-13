@@ -33,9 +33,9 @@ paths:
       #description: Endpoint desc relevant to all operations in this path
       security: []
       requestBody:
-        $ref: "#/components/requestBodies/UserCredentials"
+        $ref: '#/components/requestBodies/UserCredentials'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -55,16 +55,16 @@ paths:
                       - token
                 required:
                   - data
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
   /users:
     post:
       summary: Create a user account
       security: []
       requestBody:
-        $ref: "#/components/requestBodies/UserCredentials"
+        $ref: '#/components/requestBodies/UserCredentials'
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/json:
@@ -88,17 +88,17 @@ paths:
                       - user
                 required:
                   - data
-        "500":
+        '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   # TODO: remove later
   /foo/bar:
     get:
       responses:
-        "200":
+        '200':
           description: OK
 
 components:
@@ -137,7 +137,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
