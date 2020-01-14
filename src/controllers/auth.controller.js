@@ -13,7 +13,7 @@ module.exports = (models) => ({
             errors: [
               {
                 code: info.code,
-                title: info.title,
+                title: info.message,
               },
             ],
           });

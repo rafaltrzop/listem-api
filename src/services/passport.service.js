@@ -42,7 +42,7 @@ passport.use(
         if (!user) {
           return done(null, false, {
             code: 'WRONG_CREDENTIALS',
-            title: 'Incorrect username or password',
+            message: 'Incorrect username or password',
           });
         }
 
@@ -50,7 +50,7 @@ passport.use(
         if (!validate) {
           return done(null, false, {
             code: 'WRONG_CREDENTIALS',
-            title: 'Incorrect username or password',
+            message: 'Incorrect username or password',
           });
         }
 

@@ -11,7 +11,7 @@ const {
 
 describe('POST /api/auth', () => {
   describe('with correct credentials', () => {
-    test('should respond with access token', async () => {
+    test('should respond with access token and refresh token', async () => {
       const user = {
         email: email(),
         password: password(),
@@ -23,15 +23,18 @@ describe('POST /api/auth', () => {
         .send(user)
         .expect(200)
         .then((res) => {
-          expect(res.body.data.token).toMatch(
+          expect(res.body.data.accessToken).toMatch(
             /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?$/,
+          );
+          expect(res.body.data.refreshToken).toMatch(
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
           );
         });
     });
   });
 
   describe('with wrong credentials', () => {
-    test('should respond with wrong password error', async () => {
+    test('should respond with incorrect username or password (wrong password)', async () => {
       const user = {
         email: email(),
         password: password(),
@@ -44,11 +47,14 @@ describe('POST /api/auth', () => {
         .expect(401)
         .then((res) => {
           expect(res.body.errors).toHaveLength(1);
-          expect(res.body.errors[0]).toEqual({ title: 'Wrong password' });
+          expect(res.body.errors[0]).toEqual({
+            code: 'WRONG_CREDENTIALS',
+            title: 'Incorrect username or password',
+          });
         });
     });
 
-    test('should respond with user not found error', () => {
+    test('should respond with incorrect username or password (user not found)', () => {
       const user = {
         email: email(),
         password: password(),
@@ -60,7 +66,10 @@ describe('POST /api/auth', () => {
         .expect(401)
         .then((res) => {
           expect(res.body.errors).toHaveLength(1);
-          expect(res.body.errors[0]).toEqual({ title: 'User not found' });
+          expect(res.body.errors[0]).toEqual({
+            code: 'WRONG_CREDENTIALS',
+            title: 'Incorrect username or password',
+          });
         });
     });
 
