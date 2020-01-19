@@ -7,10 +7,23 @@ module.exports = {
       type: Sequelize.INTEGER,
     },
     userId: {
+      allowNull: false,
       type: Sequelize.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
     },
     refreshToken: {
-      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      validate: {
+        notEmpty: true,
+        isUUID: 4,
+      },
     },
     createdAt: {
       allowNull: false,

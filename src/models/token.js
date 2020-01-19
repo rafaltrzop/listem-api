@@ -2,16 +2,23 @@ module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define(
     'Token',
     {
-      userId: DataTypes.INTEGER,
-      refreshToken: DataTypes.STRING,
+      refreshToken: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        validate: {
+          notEmpty: true,
+          isUUID: 4,
+        },
+      },
     },
     {},
   );
 
-  // TODO
-  // associations can be defined here
-  // Token.associate = (models) => {
-  // };
+  Token.associate = (models) => {
+    Token.belongsTo(models.User);
+  };
 
   return Token;
 };

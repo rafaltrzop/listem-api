@@ -32,10 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  // TODO
-  // associations can be defined below
-  // User.associate = (models) => {
-  // };
+  User.associate = (models) => {
+    User.hasMany(models.Token);
+  };
 
   User.prototype.isValidPassword = async function isValidPassword(password) {
     const user = this;

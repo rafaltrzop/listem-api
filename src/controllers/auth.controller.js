@@ -39,6 +39,7 @@ module.exports = (models) => ({
 
           // TODO: save access token and refresh token in database
           const refreshToken = uuidv4();
+          // const { refreshToken } = await models.Token.create({ userId: user.id });
 
           return res.json({
             data: {
