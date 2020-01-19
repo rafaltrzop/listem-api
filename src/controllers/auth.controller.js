@@ -37,11 +37,13 @@ module.exports = (models) => ({
           };
           const accessToken = jwt.sign(payload, secret, options);
 
+          // TODO: save access token and refresh token in database
+          const refreshToken = uuidv4();
+
           return res.json({
             data: {
               accessToken,
-              // TODO: save access token and refresh token in database
-              refreshToken: uuidv4(),
+              refreshToken,
             },
           });
         });
