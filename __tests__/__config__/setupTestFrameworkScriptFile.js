@@ -8,7 +8,7 @@ const { sequelize } = models;
 // global.models = models;
 
 afterEach(async () => {
-  await sequelize.truncate();
+  await sequelize.truncate({ cascade: true });
 });
 
 afterAll(async () => {
