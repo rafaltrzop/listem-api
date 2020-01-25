@@ -1,7 +1,5 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-// TODO: remove uuid package
-// const uuidv4 = require('uuid/v4');
 
 module.exports = (models) => ({
   index(req, res, next) {
