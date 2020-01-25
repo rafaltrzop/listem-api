@@ -1,5 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+// TODO: remove uuid package
 // const uuidv4 = require('uuid/v4');
 
 module.exports = (models) => ({
@@ -38,8 +39,9 @@ module.exports = (models) => ({
           const accessToken = jwt.sign(payload, secret, options);
 
           // TODO: add try catch or .catch((err) => {})
-          // const refreshToken = uuidv4();
-          const { refreshToken } = await models.Token.create({ userId: user.id });
+          const token = models.Token.build({ userId: user.id });
+          const { refreshToken } = token;
+          token.save();
 
           return res.json({
             data: {

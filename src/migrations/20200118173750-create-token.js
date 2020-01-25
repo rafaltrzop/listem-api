@@ -18,11 +18,10 @@ module.exports = {
     refreshToken: {
       allowNull: false,
       unique: true,
-      type: Sequelize.UUID,
+      type: Sequelize.STRING,
       defaultValue: Sequelize.UUIDV4,
       validate: {
         notEmpty: true,
-        isUUID: 4,
       },
     },
     createdAt: {

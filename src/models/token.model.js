@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define(
     'Token',
@@ -14,23 +16,23 @@ module.exports = (sequelize, DataTypes) => {
       refreshToken: {
         allowNull: false,
         unique: true,
-        type: DataTypes.UUID,
+        type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
         validate: {
           notEmpty: true,
-          isUUID: 4,
         },
       },
     },
     {
-      // TODO: hash refresh token, try to use beforeSave hook?
-      // hooks: {
-      //   async beforeCreate(user) {
-      //     const saltRounds = 12;
-      //     // eslint-disable-next-line no-param-reassign
-      //     user.password = await bcrypt.hash(user.password, saltRounds);
-      //   },
-      // },
+      hooks: {
+        async beforeSave(token) {
+          // eslint-disable-next-line no-param-reassign
+          token.refreshToken = crypto
+            .createHash('sha256')
+            .update(token.refreshToken)
+            .digest('hex');
+        },
+      },
     },
   );
 
