@@ -1,6 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 
 module.exports = (models) => ({
   index(req, res, next) {
@@ -19,7 +19,7 @@ module.exports = (models) => ({
           });
         }
 
-        req.login(user, { session: false }, (err) => {
+        req.login(user, { session: false }, async (err) => {
           if (err) return next(err);
 
           // TODO: what should be in the payload?
@@ -37,9 +37,9 @@ module.exports = (models) => ({
           };
           const accessToken = jwt.sign(payload, secret, options);
 
-          // TODO: save access token and refresh token in database
-          const refreshToken = uuidv4();
-          // const { refreshToken } = await models.Token.create({ userId: user.id });
+          // TODO: add try catch or .catch((err) => {})
+          // const refreshToken = uuidv4();
+          const { refreshToken } = await models.Token.create({ userId: user.id });
 
           return res.json({
             data: {
