@@ -39,7 +39,7 @@ module.exports = (models) => ({
           // TODO: add try catch or .catch((err) => {})
           const token = models.Token.build({ userId: user.id });
           const { refreshToken } = token;
-          token.save();
+          await token.save();
 
           return res.json({
             data: {

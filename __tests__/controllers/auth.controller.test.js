@@ -4,7 +4,7 @@ const faker = require('faker');
 const app = require('../../app');
 const models = require('../../src/models');
 
-const { User } = models;
+const { Token, User } = models;
 const {
   internet: { email, password },
 } = faker;
@@ -16,13 +16,14 @@ describe('POST /api/auth', () => {
         email: email(),
         password: password(),
       };
-      await User.create(user);
+      const { id: userId } = await User.create(user);
 
       return request(app)
         .post('/api/auth')
         .send(user)
         .expect(200)
-        .then((res) => {
+        .then(async (res) => {
+          expect(await Token.count({ where: { userId } })).toBe(1);
           expect(res.body.data.accessToken).toMatch(
             /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?$/,
           );
