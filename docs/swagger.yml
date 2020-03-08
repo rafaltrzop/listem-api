@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.0.3
 
 info:
   title: Listem API
@@ -13,22 +13,17 @@ security:
   - BearerAuth: []
   - ApiKeyAuth: []
 
-#tags:
-#  - name: abc
-#    description: Everything about your Pets
-#    externalDocs:
-#      url: http://docs.my-api.com/pet-operations.htm
-#  - name: xyz
-#    description: Access to Petstore orders
-#    externalDocs:
-#      url: http://docs.my-api.com/store-orders.htm
+tags:
+  - name: auth
+    description: Authentication endpoints
+  - name: users
+    description: Users endpoints
 
 paths:
   /auth:
     post:
-      #tags:
-      #  - xyz
-      #  - abc
+      tags:
+        - auth
       summary: Authenticate user
       #description: Endpoint desc relevant to all operations in this path
       security: []
@@ -36,36 +31,48 @@ paths:
         $ref: '#/components/requestBodies/UserCredentials'
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      accessToken:
-                        type: string
-                        description: Access token (JWT)
-                      refreshToken:
-                        type: string
-                        description: Refresh token (UUID)
-                    required:
-                      - token
-                required:
-                  - data
+          $ref: '#/components/responses/Tokens'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+  /auth/token:
+    post:
+      tags:
+        - auth
+      summary: Refresh access token
+      security: []
+      # TODO: create schema for below request body
+      requestBody:
+        description: Tokens for exchange
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  description: Access token (JWT)
+                refreshToken:
+                  type: string
+                  description: Refresh token (UUID)
+              required:
+                - accessToken
+                - refreshToken
+      # TODO: add more responses
+      responses:
+        '200':
+          $ref: '#/components/responses/Tokens'
   /users:
     post:
+      tags:
+        - users
       summary: Create a user account
       security: []
       requestBody:
         $ref: '#/components/requestBodies/UserCredentials'
       responses:
         '201':
-          description: Created
+          description: Created user details
           content:
             application/json:
               schema:
@@ -122,16 +129,33 @@ components:
             properties:
               email:
                 type: string
-                # example: inline@example.com
               password:
                 type: string
             required:
               - email
               - password
-          #example:
-          #  email: email@address.com
-          #  password: paSSw0rd
   responses:
+    Tokens:
+      description: Tokens
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: Access token (JWT)
+                  refreshToken:
+                    type: string
+                    description: Refresh token (UUID)
+                required:
+                  - accessToken
+                  - refreshToken
+            required:
+              - data
     UnauthorizedError:
       description: Unauthorized
       content:
