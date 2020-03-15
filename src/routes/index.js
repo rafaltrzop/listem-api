@@ -3,12 +3,26 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const { validationResult } = require('express-validator');
 
 const models = require('../models');
 
 const publicRoutes = express();
 const privateRoutes = express();
 const basename = path.basename(__filename);
+
+function validate(validations) {
+  return async (req, res, next) => {
+    await Promise.all(validations.map((validation) => validation.run(req)));
+
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+
+    res.status(422).json({ errors: errors.array() });
+  };
+}
 
 function autoloadRoutes(routesDir, app, directory = '') {
   fs.readdirSync(routesDir)
@@ -24,7 +38,7 @@ function autoloadRoutes(routesDir, app, directory = '') {
           const router = express.Router();
           const routeName = path.basename(file, '.route.js');
           const controller = require(`../controllers/${directory}${routeName}.controller`)(models);
-          const route = require(filePath)(router, controller);
+          const route = require(filePath)(router, controller, validate);
 
           app.use(`/${directory}${routeName}`, route);
         }

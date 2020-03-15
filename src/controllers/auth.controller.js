@@ -1,8 +1,9 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const { body } = require('express-validator');
 
 module.exports = (models) => ({
-  index(req, res, next) {
+  login(req, res, next) {
     passport.authenticate('login', (error, user, info) => {
       try {
         if (error) return next(error);
@@ -52,5 +53,9 @@ module.exports = (models) => ({
         return next(err);
       }
     })(req, res, next);
+  },
+  // TODO: use proper validators
+  loginRequest() {
+    return [body('email').isEmail(), body('password').isString()];
   },
 });

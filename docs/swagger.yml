@@ -19,6 +19,7 @@ tags:
   - name: users
     description: Users endpoints
 
+# TODO: split to multiple files
 paths:
   /auth:
     post:
