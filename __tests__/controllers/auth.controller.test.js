@@ -73,18 +73,5 @@ describe('POST /api/auth', () => {
           });
         });
     });
-
-    test('should respond with missing credentials error', () => {
-      const user = {};
-
-      return request(app)
-        .post('/api/auth')
-        .send(user)
-        .expect(401)
-        .then((res) => {
-          expect(res.body.errors).toHaveLength(1);
-          expect(res.body.errors[0]).toEqual({ title: 'Missing credentials' });
-        });
-    });
   });
 });
