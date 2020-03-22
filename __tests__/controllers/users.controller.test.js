@@ -1,19 +1,15 @@
 const request = require('supertest');
-const faker = require('faker');
 
 const app = require('../../app');
 const models = require('../../src/models');
 
 const { User } = models;
-const {
-  internet: { email, password },
-} = faker;
 
 describe('POST /api/users', () => {
   test('should create a new user and return its id', async () => {
     const user = {
-      email: email(),
-      password: password(),
+      email: 'test@gmail.com',
+      password: 'Passw0rd!',
     };
 
     return request(app)

@@ -1,20 +1,16 @@
 const request = require('supertest');
-const faker = require('faker');
 
 const app = require('../../app');
 const models = require('../../src/models');
 
 const { Token, User } = models;
-const {
-  internet: { email, password },
-} = faker;
 
 describe('POST /api/auth', () => {
   describe('with correct credentials', () => {
     test('should respond with access token and refresh token', async () => {
       const user = {
-        email: email(),
-        password: password(),
+        email: 'test@gmail.com',
+        password: 'Passw0rd!',
       };
       const { id: userId } = await User.create(user);
 
@@ -37,14 +33,14 @@ describe('POST /api/auth', () => {
   describe('with wrong credentials', () => {
     test('should respond with incorrect username or password (wrong password)', async () => {
       const user = {
-        email: email(),
-        password: password(),
+        email: 'test@gmail.com',
+        password: 'Passw0rd!',
       };
       await User.create(user);
 
       return request(app)
         .post('/api/auth')
-        .send({ ...user, password: password() })
+        .send({ ...user, password: 'wrongPassw0rd!' })
         .expect(401)
         .then((res) => {
           expect(res.body.errors).toHaveLength(1);
@@ -57,8 +53,8 @@ describe('POST /api/auth', () => {
 
     test('should respond with incorrect username or password (user not found)', () => {
       const user = {
-        email: email(),
-        password: password(),
+        email: 'test@gmail.com',
+        password: 'Passw0rd!',
       };
 
       return request(app)
