@@ -1,6 +1,9 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { body } = require('express-validator');
+const PasswordValidator = require('password-validator');
+
+const { VALIDATOR_MESSAGE } = require('../utils/validation');
 
 module.exports = (models) => ({
   login(req, res, next) {
@@ -54,8 +57,51 @@ module.exports = (models) => ({
       }
     })(req, res, next);
   },
-  // TODO: use proper validators
   loginRequest() {
-    return [body('email').isEmail(), body('password').isString()];
+    return [
+      body('email')
+        .exists()
+        .withMessage(VALIDATOR_MESSAGE.EXISTS)
+        .trim()
+        .notEmpty()
+        .withMessage(VALIDATOR_MESSAGE.NOT_EMPTY)
+        .isEmail()
+        .withMessage(VALIDATOR_MESSAGE.IS_EMAIL)
+        .normalizeEmail(),
+      body('password')
+        .exists()
+        .withMessage(VALIDATOR_MESSAGE.EXISTS)
+        .notEmpty()
+        .withMessage(VALIDATOR_MESSAGE.NOT_EMPTY)
+        .isString()
+        .withMessage(VALIDATOR_MESSAGE.IS_STRING)
+        .custom((password) => {
+          const passwordSchema = new PasswordValidator();
+          passwordSchema
+            .is()
+            .min(8)
+            .is()
+            .max(64)
+            .has()
+            .uppercase()
+            .has()
+            .lowercase()
+            .has()
+            .digits()
+            .has()
+            .symbols()
+            .has()
+            .not()
+            .spaces();
+
+          const failedPasswordRules = passwordSchema.validate(password, { list: true });
+          if (failedPasswordRules.length) {
+            const failedRules = failedPasswordRules.join(', ');
+            throw new Error(`Invalid password format (failed rules: ${failedRules})`);
+          }
+
+          return true;
+        }),
+    ];
   },
 });

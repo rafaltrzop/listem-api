@@ -13,8 +13,6 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true,
         },
       },
-      // TODO: validate password policy constraints
-      //  min length, max length, special chars etc.
       password: {
         allowNull: false,
         type: DataTypes.STRING,
