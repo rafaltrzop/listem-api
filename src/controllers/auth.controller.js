@@ -1,7 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { body } = require('express-validator');
-const PasswordValidator = require('password-validator');
 
 const { VALIDATOR_MESSAGE } = require('../utils/validation');
 
@@ -57,11 +56,14 @@ module.exports = (models) => ({
       }
     })(req, res, next);
   },
+
   loginRequest() {
     return [
       body('email')
         .exists()
         .withMessage(VALIDATOR_MESSAGE.EXISTS)
+        .isString()
+        .withMessage(VALIDATOR_MESSAGE.IS_STRING)
         .trim()
         .notEmpty()
         .withMessage(VALIDATOR_MESSAGE.NOT_EMPTY)
@@ -71,37 +73,10 @@ module.exports = (models) => ({
       body('password')
         .exists()
         .withMessage(VALIDATOR_MESSAGE.EXISTS)
-        .notEmpty()
-        .withMessage(VALIDATOR_MESSAGE.NOT_EMPTY)
         .isString()
         .withMessage(VALIDATOR_MESSAGE.IS_STRING)
-        .custom((password) => {
-          const passwordSchema = new PasswordValidator();
-          passwordSchema
-            .is()
-            .min(8)
-            .is()
-            .max(64)
-            .has()
-            .uppercase()
-            .has()
-            .lowercase()
-            .has()
-            .digits()
-            .has()
-            .symbols()
-            .has()
-            .not()
-            .spaces();
-
-          const failedPasswordRules = passwordSchema.validate(password, { list: true });
-          if (failedPasswordRules.length) {
-            const failedRules = failedPasswordRules.join(', ');
-            throw new Error(`Invalid password format (failed rules: ${failedRules})`);
-          }
-
-          return true;
-        }),
+        .notEmpty()
+        .withMessage(VALIDATOR_MESSAGE.NOT_EMPTY),
     ];
   },
 });
