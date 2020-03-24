@@ -55,7 +55,7 @@ module.exports = (models) => ({
             .is()
             .min(8)
             .is()
-            .max(64)
+            .max(40)
             .has()
             .uppercase()
             .has()

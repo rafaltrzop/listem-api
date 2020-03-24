@@ -1,10 +1,10 @@
 const passport = require('passport');
 
-module.exports = (router, controller) => {
+module.exports = (router, controller, validate) => {
   router
     .route('/')
     .post(
-      controller.createUserRequest(),
+      validate(controller.createUserRequest()),
       passport.authenticate('signup', { session: false }),
       controller.createUser,
     );
