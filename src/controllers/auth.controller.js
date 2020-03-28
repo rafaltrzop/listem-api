@@ -1,8 +1,8 @@
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
 const { body } = require('express-validator');
 
 const { VALIDATOR_MESSAGE } = require('../utils/validation');
+const { generateAccessToken, generateRefreshToken } = require('../utils/auth');
 
 module.exports = (models) => ({
   login(req, res, next) {
@@ -24,30 +24,17 @@ module.exports = (models) => ({
         req.login(user, { session: false }, async (err) => {
           if (err) return next(err);
 
-          // TODO: what should be in the payload?
-          //  - is it safe to store user id in JWT?
-          //  - what if user changes email address?
+          const userId = user.id;
           const payload = {
             user: {
-              id: user.id,
-              email: user.email,
+              id: userId,
             },
           };
-          const secret = process.env.JWT_SECRET;
-          const options = {
-            expiresIn: '3m',
-          };
-          const accessToken = jwt.sign(payload, secret, options);
-
-          // TODO: add try catch or .catch((err) => {})
-          const token = models.Token.build({ userId: user.id });
-          const { refreshToken } = token;
-          await token.save();
 
           return res.json({
             data: {
-              accessToken,
-              refreshToken,
+              accessToken: generateAccessToken(payload),
+              refreshToken: await generateRefreshToken(userId),
             },
           });
         });

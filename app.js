@@ -58,6 +58,7 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
+// TODO: res.status(err.status || 500)
 // error handler
 app.use((err, req, res, next) => {
   res.status(500).json({

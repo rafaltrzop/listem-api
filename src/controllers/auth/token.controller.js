@@ -3,8 +3,10 @@ const crypto = require('crypto');
 const { body } = require('express-validator');
 
 const { VALIDATOR_MESSAGE } = require('../../utils/validation');
+const { generateAccessToken, generateRefreshToken } = require('../../utils/auth');
 
 module.exports = (models) => ({
+  // TODO: set up cron (remove tokens older than n days)
   async refreshAccessToken(req, res) {
     const { accessToken, refreshToken } = req.body;
     let payload;
@@ -13,7 +15,6 @@ module.exports = (models) => ({
       const secret = process.env.JWT_SECRET;
       payload = jwt.verify(accessToken, secret, { ignoreExpiration: true });
     } catch (error) {
-      // TODO: response status 401?
       return res.status(422).json({
         errors: [
           {
@@ -24,10 +25,11 @@ module.exports = (models) => ({
       });
     }
 
-    // TODO: clean tokens table (remove tokens older than x days)?
+    const userId = payload.user.id;
+    payload = { user: payload.user };
     const isValidRefreshToken = await models.Token.destroy({
       where: {
-        userId: payload.user.id,
+        userId,
         refreshToken: crypto
           .createHash('sha256')
           .update(refreshToken)
@@ -35,38 +37,23 @@ module.exports = (models) => ({
       },
     });
 
-    // TODO: remove
-    console.log('###############');
-    console.log(refreshToken);
-    console.log(accessToken);
-    console.log(payload);
-    console.log('deleted rows:', isValidRefreshToken);
-    console.log('###############');
-
     if (isValidRefreshToken) {
-      // TODO
-      //  - send back new access token and refresh token
-      //  - generate and save refresh token in db with user id
-      //  - generate new access token with the same payload
-
-      // TODO
-      res.json({
+      return res.json({
         data: {
-          accessToken: 'TODO',
-          refreshToken: 'TODO',
+          accessToken: generateAccessToken(payload),
+          refreshToken: await generateRefreshToken(userId),
         },
       });
-    } else {
-      // TODO: response status 401?
-      return res.status(422).json({
-        errors: [
-          {
-            code: 'INVALID_REFRESH_TOKEN',
-            title: 'Invalid refresh token',
-          },
-        ],
-      });
     }
+
+    res.status(401).json({
+      errors: [
+        {
+          code: 'INVALID_REFRESH_TOKEN',
+          title: 'Invalid refresh token',
+        },
+      ],
+    });
   },
 
   refreshAccessTokenRequest() {
