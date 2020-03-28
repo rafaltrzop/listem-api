@@ -1,17 +1,72 @@
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { body } = require('express-validator');
 
 const { VALIDATOR_MESSAGE } = require('../../utils/validation');
 
 module.exports = (models) => ({
-  refreshAccessToken(req, res) {
-    // TODO: remove
-    console.log('#####################');
-    console.log(req.body);
-    console.log('#####################');
+  async refreshAccessToken(req, res) {
+    const { accessToken, refreshToken } = req.body;
+    let payload;
 
-    res.json({
-      data: 'index token refresh',
+    try {
+      const secret = process.env.JWT_SECRET;
+      payload = jwt.verify(accessToken, secret, { ignoreExpiration: true });
+    } catch (error) {
+      // TODO: response status 401?
+      return res.status(422).json({
+        errors: [
+          {
+            code: 'INVALID_ACCESS_TOKEN',
+            title: 'Invalid signature of access token',
+          },
+        ],
+      });
+    }
+
+    // TODO: clean tokens table (remove tokens older than x days)?
+    const isValidRefreshToken = await models.Token.destroy({
+      where: {
+        userId: payload.user.id,
+        refreshToken: crypto
+          .createHash('sha256')
+          .update(refreshToken)
+          .digest('hex'),
+      },
     });
+
+    // TODO: remove
+    console.log('###############');
+    console.log(refreshToken);
+    console.log(accessToken);
+    console.log(payload);
+    console.log('deleted rows:', isValidRefreshToken);
+    console.log('###############');
+
+    if (isValidRefreshToken) {
+      // TODO
+      //  - send back new access token and refresh token
+      //  - generate and save refresh token in db with user id
+      //  - generate new access token with the same payload
+
+      // TODO
+      res.json({
+        data: {
+          accessToken: 'TODO',
+          refreshToken: 'TODO',
+        },
+      });
+    } else {
+      // TODO: response status 401?
+      return res.status(422).json({
+        errors: [
+          {
+            code: 'INVALID_REFRESH_TOKEN',
+            title: 'Invalid refresh token',
+          },
+        ],
+      });
+    }
   },
 
   refreshAccessTokenRequest() {
