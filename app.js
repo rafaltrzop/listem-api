@@ -66,7 +66,7 @@ app.use((err, req, res, next) => {
     errors: [
       {
         title: err.message,
-        detail: err.stack.split('\n'), // TODO: send stack trace only in development
+        detail: process.env.NODE_ENV === 'development' ? err.stack.split('\n') : undefined,
       },
     ],
   });
