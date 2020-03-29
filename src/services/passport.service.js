@@ -71,9 +71,9 @@ passport.use(
         ExtractJwt.fromUrlQueryParameter('accessToken'),
       ]),
     },
-    (token, done) => {
+    (accessToken, done) => {
       try {
-        return done(null, token.user);
+        return done(null, accessToken.user);
       } catch (error) {
         done(error);
       }
