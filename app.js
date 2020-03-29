@@ -32,7 +32,8 @@ app.use(
         return res.status(401).json({
           errors: [
             {
-              title: 'Missing or wrong token', // TODO: change message
+              code: 'INVALID_ACCESS_TOKEN',
+              title: 'Missing or expired access token',
             },
           ],
         });
