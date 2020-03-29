@@ -5,6 +5,7 @@ const models = require('../models');
 function generateAccessToken(payload) {
   const secret = process.env.JWT_SECRET;
   const options = {
+    // TODO: add env?
     expiresIn: '3m',
   };
   const accessToken = jwt.sign(payload, secret, options);
