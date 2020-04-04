@@ -20,12 +20,12 @@ describe('POST /api/auth', () => {
         .expect(200)
         .then(async (res) => {
           expect(await Token.count({ where: { userId } })).toBe(1);
-          expect(res.body.data.accessToken).toMatch(
-            /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?$/,
-          );
-          expect(res.body.data.refreshToken).toMatch(
-            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-          );
+
+          const jwtRegExp = /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?$/;
+          expect(res.body.data.accessToken).toMatch(jwtRegExp);
+
+          const uuidV4RegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+          expect(res.body.data.refreshToken).toMatch(uuidV4RegExp);
         });
     });
   });
