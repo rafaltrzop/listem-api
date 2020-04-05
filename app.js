@@ -5,8 +5,7 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
-const yaml = require('js-yaml');
-const fs = require('fs');
+const $SyncRefParser = require('json-schema-ref-parser-sync');
 
 const app = express();
 require('dotenv').config();
@@ -46,7 +45,7 @@ app.use(
 );
 
 if (process.env.NODE_ENV === 'development') {
-  const swaggerDocument = yaml.safeLoad(fs.readFileSync('./docs/swagger.yml', 'utf8'));
+  const swaggerDocument = $SyncRefParser.dereference('./docs/swagger.yml');
   app.use(
     '/api-docs',
     swaggerUi.serve,
