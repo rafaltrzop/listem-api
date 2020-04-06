@@ -1,0 +1,6 @@
+# TODO: remove later
+/foo/bar:
+  get:
+    responses:
+      '200':
+        description: OK

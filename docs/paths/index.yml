@@ -1,0 +1,10 @@
+/auth:
+  $ref: './auth.yml#/~1auth'
+/auth/token:
+  $ref: './auth.yml#/~1auth~1token'
+
+/users:
+  $ref: './users.yml#/~1users'
+
+/foo/bar:
+  $ref: './foo.yml#/~1foo~1bar'

@@ -1,0 +1,44 @@
+/auth:
+  post:
+    tags:
+      - auth
+    summary: Authenticate user
+    security: []
+    requestBody:
+      $ref: '#components/requestBodies/UserCredentials'
+    responses:
+      '200':
+        $ref: '#components/responses/Tokens'
+      '401':
+        $ref: '#components/responses/UnauthorizedError'
+
+/auth/token:
+  post:
+    tags:
+      - auth
+    summary: Refresh access token
+    security: []
+    # TODO: create schema for below request body
+    requestBody:
+      description: Tokens for exchange
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              accessToken:
+                type: string
+                description: Access token (JWT)
+              refreshToken:
+                type: string
+                description: Refresh token (UUID)
+            required:
+              - accessToken
+              - refreshToken
+    # TODO: add more responses
+    responses:
+      '200':
+        $ref: '#components/responses/Tokens'
+      #'401':
+      #'422':
