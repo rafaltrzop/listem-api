@@ -14,10 +14,7 @@ security:
   - ApiKeyAuth: []
 
 tags:
-  - name: auth
-    description: Authentication endpoints
-  - name: users
-    description: Users endpoints
+  $ref: './tags/index.yml'
 
 paths:
   $ref: './paths/index.yml'

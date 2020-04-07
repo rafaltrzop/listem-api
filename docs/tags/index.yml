@@ -1,0 +1,5 @@
+- name: auth
+  description: Authentication endpoints
+
+- name: users
+  description: Users endpoints
