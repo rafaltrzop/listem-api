@@ -71,27 +71,70 @@ components:
             required:
               - data
     UnauthorizedError:
-      description: Unauthorized
+      description: Unauthorized Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
             type: object
             properties:
-              title:
-                type: string
-                description: Error message
-              detail:
-                type: string
-                description: Stack trace
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Error code
+                    title:
+                      type: string
+                      description: Error message
+                  required:
+                    - code
+                    - title
             required:
-              - title
-      required:
-        - errors
+              - errors
+    UnprocessableEntity:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Error code
+                    title:
+                      type: string
+                      description: Error message
+                  required:
+                    - code
+                    - title
+            required:
+              - errors
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error message
+                    detail:
+                      type: string
+                      description: Stack trace
+                  required:
+                    - title
+            required:
+              - errors

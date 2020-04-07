@@ -11,6 +11,8 @@
         $ref: '#components/responses/Tokens'
       '401':
         $ref: '#components/responses/UnauthorizedError'
+      '500':
+        $ref: '#components/responses/InternalServerError'
 
 /auth/token:
   post:
@@ -36,9 +38,12 @@
             required:
               - accessToken
               - refreshToken
-    # TODO: add more responses
     responses:
       '200':
         $ref: '#components/responses/Tokens'
-      #'401':
-      #'422':
+      '401':
+        $ref: '#components/responses/UnauthorizedError'
+      '422':
+        $ref: '#components/responses/UnprocessableEntity'
+      '500':
+        $ref: '#components/responses/InternalServerError'
