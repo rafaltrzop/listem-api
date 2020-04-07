@@ -1,0 +1,92 @@
+Tokens:
+  description: Tokens
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              accessToken:
+                type: string
+                description: Access token (JWT)
+              refreshToken:
+                type: string
+                description: Refresh token (UUID)
+            required:
+              - accessToken
+              - refreshToken
+        required:
+          - data
+
+UnauthorizedError:
+  description: Unauthorized Error
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          errors:
+            type: array
+            items:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Error code
+                title:
+                  type: string
+                  description: Error message
+              required:
+                - code
+                - title
+        required:
+          - errors
+
+UnprocessableEntity:
+  description: Unprocessable Entity
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          errors:
+            type: array
+            items:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Error code
+                title:
+                  type: string
+                  description: Error message
+              required:
+                - code
+                - title
+        required:
+          - errors
+
+InternalServerError:
+  description: Internal Server Error
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          errors:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Error message
+                detail:
+                  type: string
+                  description: Stack trace
+              required:
+                - title
+        required:
+          - errors

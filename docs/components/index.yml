@@ -1,0 +1,8 @@
+securitySchemes:
+  $ref: './security-schemes.yml'
+
+requestBodies:
+  $ref: './request-bodies.yml'
+
+responses:
+  $ref: './responses.yml'
