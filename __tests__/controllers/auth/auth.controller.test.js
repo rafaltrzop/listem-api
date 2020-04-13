@@ -1,9 +1,7 @@
 const request = require('supertest');
 
-const app = require('../../app');
-const models = require('../../src/models');
-
-const { Token, User } = models;
+const app = require('../../../app');
+const { Token, User } = require('../../../src/models');
 
 describe('POST /api/auth', () => {
   describe('with correct credentials', () => {
