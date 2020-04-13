@@ -3,9 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 
-const models = require('../models');
-
-const { User } = models;
+const { User } = require('../models');
 
 passport.use(
   'signup',

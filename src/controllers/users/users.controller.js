@@ -1,22 +1,9 @@
 const { body } = require('express-validator');
 const PasswordValidator = require('password-validator');
 
-const { VALIDATOR_MESSAGE } = require('../utils/validation');
+const { VALIDATOR_MESSAGE } = require('../../utils/validation');
 
-module.exports = (models) => ({
-  // TODO
-  index(req, res) {
-    // const User = models.User;
-    //
-    // User.findAll().then(users => {
-    //   console.log(users);
-    // });
-
-    res.json({
-      data: 'index user',
-    });
-  },
-
+module.exports = {
   createUser(req, res) {
     // TODO: use valid JSON API response, send back only some fields? no password (hash)?
     // TODO: add location header
@@ -75,25 +62,4 @@ module.exports = (models) => ({
         }),
     ];
   },
-
-  // TODO
-  show(req, res) {
-    res.json({
-      data: 'show user',
-    });
-  },
-
-  // TODO
-  update(req, res) {
-    res.json({
-      data: 'update user',
-    });
-  },
-
-  // TODO
-  destroy(req, res) {
-    res.json({
-      data: 'destroy user',
-    });
-  },
-});
+};

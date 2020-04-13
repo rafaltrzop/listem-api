@@ -1,10 +1,10 @@
 const passport = require('passport');
 const { body } = require('express-validator');
 
-const { VALIDATOR_MESSAGE } = require('../utils/validation');
-const { generateAccessToken, generateRefreshToken } = require('../utils/auth');
+const { VALIDATOR_MESSAGE } = require('../../utils/validation');
+const { generateAccessToken, generateRefreshToken } = require('../../utils/auth');
 
-module.exports = (models) => ({
+module.exports = {
   login(req, res, next) {
     passport.authenticate('login', (error, user, info) => {
       try {
@@ -66,4 +66,4 @@ module.exports = (models) => ({
         .withMessage(VALIDATOR_MESSAGE.NOT_EMPTY),
     ];
   },
-});
+};

@@ -20,29 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(passport.initialize());
-app.use('/api', routes.publicRoutes);
-app.use(
-  '/api',
-  (req, res, next) => {
-    passport.authenticate('jwt', { session: false }, (error, user, info) => {
-      if (error) return next(error);
-
-      if (!user) {
-        return res.status(401).json({
-          errors: [
-            {
-              code: 'INVALID_ACCESS_TOKEN',
-              title: 'Missing or expired access token',
-            },
-          ],
-        });
-      }
-
-      next();
-    })(req, res, next);
-  },
-  routes.privateRoutes,
-);
+app.use(routes);
 
 if (process.env.NODE_ENV === 'development') {
   const swaggerDocument = $SyncRefParser.dereference('./docs/swagger.yml');
