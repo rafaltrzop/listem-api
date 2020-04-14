@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    User.hasMany(models.Token);
+    User.hasMany(models.Token, { foreignKey: 'userId' });
   };
 
   User.prototype.isValidPassword = async function isValidPassword(password) {
