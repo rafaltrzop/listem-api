@@ -6,7 +6,7 @@ const { generateAccessToken } = require('../../../src/utils/auth');
 
 describe('POST /api/auth/token', () => {
   describe.skip('with valid tokens', () => {
-    test('should respond with access token and refresh token', async () => {
+    test('should respond with access token and refresh token', () => {
       // TODO
     });
   });
@@ -14,7 +14,7 @@ describe('POST /api/auth/token', () => {
   // TODO: fix flaky test
   //  SequelizeDatabaseError: relation "Tokens" does not exist
   describe('with invalid tokens', () => {
-    test('should respond with invalid signature of access token', async () => {
+    test('should respond with invalid signature of access token', () => {
       const tokens = {
         accessToken: 'invalid.access.token',
         refreshToken: uuidv4(),
@@ -33,7 +33,7 @@ describe('POST /api/auth/token', () => {
         });
     });
 
-    test('should respond with invalid refresh token', async () => {
+    test('should respond with invalid refresh token', () => {
       const payload = {
         user: {
           id: 1,

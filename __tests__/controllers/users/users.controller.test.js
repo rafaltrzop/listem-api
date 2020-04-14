@@ -4,7 +4,7 @@ const app = require('../../../app');
 const { User } = require('../../../src/models');
 
 describe('POST /api/users', () => {
-  test('should create a new user and return its id and email', async () => {
+  test('should create a new user and return its id and email', () => {
     const user = {
       email: 'test@gmail.com',
       password: 'Passw0rd!',
