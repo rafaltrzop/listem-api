@@ -11,8 +11,6 @@ describe('POST /api/auth/token', () => {
     });
   });
 
-  // TODO: fix flaky test
-  //  SequelizeDatabaseError: relation "Tokens" does not exist
   describe('with invalid tokens', () => {
     test('should respond with invalid signature of access token', () => {
       const tokens = {
