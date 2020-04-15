@@ -1,13 +1,58 @@
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
 const app = require('../../../app');
+const { Token, User } = require('../../../src/models');
 const { generateAccessToken } = require('../../../src/utils/auth');
 
 describe('POST /api/auth/token', () => {
-  describe.skip('with valid tokens', () => {
-    test('should respond with access token and refresh token', () => {
-      // TODO
+  describe('with valid tokens', () => {
+    test('should respond with access token and refresh token', async () => {
+      const user = {
+        email: 'test@gmail.com',
+        password: 'Passw0rd!',
+      };
+      const { id: userId } = await User.create(user);
+
+      const refreshToken = uuidv4();
+
+      const token = {
+        userId,
+        refreshToken,
+      };
+      await Token.create(token);
+
+      const payload = {
+        user: {
+          id: userId,
+        },
+      };
+      const tokens = {
+        accessToken: generateAccessToken(payload),
+        refreshToken,
+      };
+
+      return request(app)
+        .post('/api/auth/token')
+        .send(tokens)
+        .expect(200)
+        .then(async (res) => {
+          const { accessToken } = res.body.data;
+
+          const jwtRegExp = /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?$/;
+          expect(accessToken).toMatch(jwtRegExp);
+
+          expect(() => {
+            const secret = process.env.JWT_SECRET;
+            jwt.verify(accessToken, secret);
+          }).not.toThrow();
+
+          const uuidV4RegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+          expect(res.body.data.refreshToken).toMatch(uuidV4RegExp);
+
+          expect(await Token.count({ where: { userId } })).toBe(1);
+        });
     });
   });
 

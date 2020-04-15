@@ -1,4 +1,5 @@
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
 
 const app = require('../../../app');
 const { Token, User } = require('../../../src/models');
@@ -17,13 +18,20 @@ describe('POST /api/auth', () => {
         .send(user)
         .expect(200)
         .then(async (res) => {
-          expect(await Token.count({ where: { userId } })).toBe(1);
+          const { accessToken } = res.body.data;
 
           const jwtRegExp = /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?$/;
-          expect(res.body.data.accessToken).toMatch(jwtRegExp);
+          expect(accessToken).toMatch(jwtRegExp);
+
+          expect(() => {
+            const secret = process.env.JWT_SECRET;
+            jwt.verify(accessToken, secret);
+          }).not.toThrow();
 
           const uuidV4RegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
           expect(res.body.data.refreshToken).toMatch(uuidV4RegExp);
+
+          expect(await Token.count({ where: { userId } })).toBe(1);
         });
     });
   });

@@ -7,7 +7,6 @@ const { VALIDATOR_MESSAGE } = require('../../utils/validation');
 const { generateAccessToken, generateRefreshToken } = require('../../utils/auth');
 
 module.exports = {
-  // TODO: write tests
   // TODO: set up cron (remove tokens older than n days)
   async refreshAccessToken(req, res) {
     const { accessToken, refreshToken } = req.body;
