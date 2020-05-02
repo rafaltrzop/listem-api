@@ -7,6 +7,8 @@
     "start": "npm run start:dev",
     "start:dev": "nodemon",
     "start:prod": "node .",
+    "db:create": "sequelize db:create",
+    "db:migrate": "sequelize db:migrate",
     "lint": "eslint bin/** .",
     "test": "jest --runInBand",
     "test:watch": "npm test -- --watch",

@@ -31,15 +31,15 @@ $ vim .env
 1. Create development and test databases:
 
    ```
-   $ npx sequelize db:create
-   $ NODE_ENV=test npx sequelize db:create
+   $ npm run db:create
+   $ NODE_ENV=test npm run db:create
    ```
 
 2. Run all migrations:
 
    ```
-   $ npx sequelize db:migrate
-   $ NODE_ENV=test npx sequelize db:migrate
+   $ npm run db:migrate
+   $ NODE_ENV=test npm run db:migrate
    ```
 
 ### IDE
