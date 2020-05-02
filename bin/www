@@ -50,7 +50,7 @@ function onListening() {
       notify: false,
       online: false,
       open: false,
-      startPath: '/api-docs',
+      startPath: '/api/docs',
       proxy: `localhost:${port}`,
       port: port + 1,
     },

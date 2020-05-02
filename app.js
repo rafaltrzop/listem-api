@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
-const swaggerUi = require('swagger-ui-express');
-const $SyncRefParser = require('json-schema-ref-parser-sync');
 
 const app = express();
 require('dotenv').config();
@@ -21,15 +19,6 @@ app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(routes);
-
-if (process.env.NODE_ENV === 'development') {
-  const swaggerDocument = $SyncRefParser.dereference('./docs/swagger.yml');
-  app.use(
-    '/api-docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument, { customSiteTitle: 'Listem API' }),
-  );
-}
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
