@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { Token } = require('../models');
 
 function generateAccessToken(payload) {
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.ACCESS_TOKEN_SECRET;
   const options = {
     // TODO: add env?
     expiresIn: '3m',

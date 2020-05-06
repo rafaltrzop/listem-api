@@ -13,7 +13,7 @@ module.exports = {
     let payload;
 
     try {
-      const secret = process.env.JWT_SECRET;
+      const secret = process.env.ACCESS_TOKEN_SECRET;
       payload = jwt.verify(accessToken, secret, { ignoreExpiration: true });
     } catch (error) {
       return res.status(422).json({

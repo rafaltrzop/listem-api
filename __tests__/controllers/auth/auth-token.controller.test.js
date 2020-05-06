@@ -44,7 +44,7 @@ describe('POST /api/auth/token', () => {
           expect(accessToken).toMatch(jwtRegExp);
 
           expect(() => {
-            const secret = process.env.JWT_SECRET;
+            const secret = process.env.ACCESS_TOKEN_SECRET;
             jwt.verify(accessToken, secret);
           }).not.toThrow();
 
