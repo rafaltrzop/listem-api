@@ -8,28 +8,6 @@
       $ref: '#components/requestBodies/UserCredentials'
     responses:
       '201':
-        description: Created user details
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                data:
-                  type: object
-                  properties:
-                    user:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        email:
-                          type: string
-                      required:
-                        - id
-                        - email
-                  required:
-                    - user
-              required:
-                - data
+        description: User was created or already exists
       '500':
         $ref: '#components/responses/InternalServerError'

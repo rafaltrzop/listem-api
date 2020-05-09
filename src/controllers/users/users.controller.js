@@ -5,15 +5,7 @@ const { VALIDATOR_MESSAGE } = require('../../utils/validation');
 
 module.exports = {
   createUser(req, res) {
-    // TODO: use valid JSON API response, send back only some fields? no password (hash)?
-    // TODO: add location header
-    // https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30
-    // https://docs.microsoft.com/pl-pl/azure/architecture/best-practices/api-design#post-methods
-    res.status(201).json({
-      data: {
-        user: req.user,
-      },
-    });
+    res.status(201).json();
   },
 
   createUserRequest() {

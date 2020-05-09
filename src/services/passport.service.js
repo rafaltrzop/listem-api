@@ -14,8 +14,11 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await User.create({ email, password });
-        return done(null, { id: user.id, email: user.email });
+        const [user, created] = await User.findOrCreate({
+          where: { email },
+          defaults: { password },
+        });
+        return done(null, { id: user.id, email: user.email, created });
       } catch (error) {
         done(error);
       }
