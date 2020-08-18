@@ -10,7 +10,11 @@ require('dotenv').config();
 const routes = require('./src/routes');
 require('./src/services/passport.service');
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
 app.use(logger('dev'));
 
 app.use(express.json());
