@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             .digest('hex');
         },
       },
-    },
+    }
   );
 
   Token.associate = (models) => {

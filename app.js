@@ -18,7 +18,7 @@ app.use(
     //  https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide
     //  https://github.com/BrowserSync/browser-sync/issues/1395
     contentSecurityPolicy: false,
-  }),
+  })
 );
 app.use(logger('dev'));
 
@@ -41,7 +41,10 @@ app.use((err, req, res, next) => {
     errors: [
       {
         title: err.message,
-        detail: process.env.NODE_ENV === 'development' ? err.stack.split('\n') : undefined,
+        detail:
+          process.env.NODE_ENV === 'development'
+            ? err.stack.split('\n')
+            : undefined,
       },
     ],
   });

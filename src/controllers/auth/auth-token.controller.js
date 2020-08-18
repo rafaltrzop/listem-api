@@ -4,10 +4,12 @@ const { body } = require('express-validator');
 
 const { Token } = require('../../models');
 const { VALIDATOR_MESSAGE } = require('../../utils/validation');
-const { generateAccessToken, generateRefreshToken } = require('../../utils/auth');
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require('../../utils/auth');
 
 module.exports = {
-  // TODO: set up cron (remove tokens older than n days)
   async refreshAccessToken(req, res) {
     const { accessToken, refreshToken } = req.body;
     let payload;

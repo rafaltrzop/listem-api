@@ -11,7 +11,7 @@ router
   .post(
     validate(controller.createUserRequest()),
     passport.authenticate('signup', { session: false }),
-    controller.createUser,
+    controller.createUser
   );
 
 module.exports = router;

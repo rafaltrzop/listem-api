@@ -44,10 +44,14 @@ module.exports = {
             .has()
             .symbols();
 
-          const failedPasswordRules = passwordSchema.validate(password, { list: true });
+          const failedPasswordRules = passwordSchema.validate(password, {
+            list: true,
+          });
           if (failedPasswordRules.length) {
             const failedRules = failedPasswordRules.join(', ');
-            throw new Error(`Invalid password format (failed rules: ${failedRules})`);
+            throw new Error(
+              `Invalid password format (failed rules: ${failedRules})`
+            );
           }
 
           return true;

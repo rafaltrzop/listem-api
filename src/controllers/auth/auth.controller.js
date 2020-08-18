@@ -2,7 +2,10 @@ const passport = require('passport');
 const { body } = require('express-validator');
 
 const { VALIDATOR_MESSAGE } = require('../../utils/validation');
-const { generateAccessToken, generateRefreshToken } = require('../../utils/auth');
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require('../../utils/auth');
 
 module.exports = {
   login(req, res, next) {
