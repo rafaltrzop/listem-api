@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jest": "^23.3.0",
     "jest": "^24.9.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.4",
     "prettier": "1.19.1",
     "prettier-eslint": "^9.0.1",
     "prettier-eslint-cli": "^4.7.1",
