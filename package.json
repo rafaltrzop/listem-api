@@ -9,7 +9,9 @@
     "start:prod": "node .",
     "db:create": "sequelize db:create",
     "db:migrate": "sequelize db:migrate",
-    "lint": "eslint bin/** .",
+    "lint": "npm run lint:script && npm run lint:format",
+    "lint:script": "eslint bin/** .",
+    "lint:format": "prettier --check .",
     "test": "jest --runInBand",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage"
