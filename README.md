@@ -48,16 +48,19 @@ IntelliJ IDEA / WebStorm / PhpStorm:
 
 1. Install the following plugins:
 
-   - [File Watchers](https://plugins.jetbrains.com/plugin/7177-file-watchers)
    - [Prettier](https://plugins.jetbrains.com/plugin/10456-prettier)
    - [EditorConfig](https://plugins.jetbrains.com/plugin/7294-editorconfig)
    - [.ignore](https://plugins.jetbrains.com/plugin/7495--ignore)
 
-2. Go to `File > Settings > Tools > File Watchers`
+2. Go to `File > Settings > Languages & Frameworks > JavaScript > Prettier`
 
-   Click `Import` button and select `watchers.xml` file from the repository.
+   Check run for files `On save` and use below as a value:
 
-From now on every change in code base will be automatically formatted by [Prettier](https://prettier.io/). [ESLint](https://eslint.org/) errors will be also automatically fixed on every file save.
+   ```
+   {**/*,*}.{js,json,md,yml}
+   ```
+
+From now on every change in code base will be automatically formatted by [Prettier](https://prettier.io/).
 
 ## Development
 
