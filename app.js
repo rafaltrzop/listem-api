@@ -12,6 +12,11 @@ require('./src/services/passport.service');
 
 app.use(
   helmet({
+    // TODO:
+    //  fix problem with default helmet CSP and browser-sync script
+    //  https://github.com/helmetjs/helmet#reference
+    //  https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide
+    //  https://github.com/BrowserSync/browser-sync/issues/1395
     contentSecurityPolicy: false,
   }),
 );
