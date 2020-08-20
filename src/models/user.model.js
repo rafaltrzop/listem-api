@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      isActive: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       hooks: {
