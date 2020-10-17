@@ -17,6 +17,7 @@
     "test:coverage": "npm test -- --coverage"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.3.0",
     "bcrypt": "^5.0.0",
     "browser-sync": "^2.26.12",
     "cookie-parser": "^1.4.5",
