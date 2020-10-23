@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { Token } = require('../models');
+const { RefreshToken } = require('../models');
 
 function generateAccessToken(payload) {
   const secret = process.env.ACCESS_TOKEN_SECRET;
@@ -13,7 +13,7 @@ function generateAccessToken(payload) {
 }
 
 async function generateRefreshToken(userId) {
-  const token = Token.build({ userId });
+  const token = RefreshToken.build({ userId });
   const { refreshToken } = token;
   await token.save();
 

@@ -1,8 +1,8 @@
 const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
-  const Token = sequelize.define(
-    'Token',
+  const RefreshToken = sequelize.define(
+    'RefreshToken',
     {
       userId: {
         allowNull: false,
@@ -25,20 +25,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        async beforeSave(token) {
+        async beforeSave(refreshToken) {
           // eslint-disable-next-line no-param-reassign
-          token.refreshToken = crypto
+          refreshToken.refreshToken = crypto
             .createHash('sha256')
-            .update(token.refreshToken)
+            .update(refreshToken.refreshToken)
             .digest('hex');
         },
       },
     }
   );
 
-  Token.associate = (models) => {
-    Token.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+  RefreshToken.associate = (models) => {
+    RefreshToken.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+    });
   };
 
-  return Token;
+  return RefreshToken;
 };

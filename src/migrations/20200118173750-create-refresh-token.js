@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Tokens', {
+    queryInterface.createTable('RefreshTokens', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -34,5 +34,6 @@ module.exports = {
         type: Sequelize.DATE,
       },
     }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Tokens'),
+  down: (queryInterface, Sequelize) =>
+    queryInterface.dropTable('RefreshTokens'),
 };

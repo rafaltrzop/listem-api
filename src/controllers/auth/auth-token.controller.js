@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { body } = require('express-validator');
 
-const { Token } = require('../../models');
+const { RefreshToken } = require('../../models');
 const { VALIDATOR_MESSAGE } = require('../../utils/validation');
 const {
   generateAccessToken,
@@ -30,7 +30,7 @@ module.exports = {
 
     const userId = payload.user.id;
     payload = { user: payload.user };
-    const isValidRefreshToken = await Token.destroy({
+    const isValidRefreshToken = await RefreshToken.destroy({
       where: {
         userId,
         refreshToken: crypto

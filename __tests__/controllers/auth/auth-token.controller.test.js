@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
 const app = require('../../../app');
-const { Token, User } = require('../../../src/models');
+const { RefreshToken, User } = require('../../../src/models');
 const { generateAccessToken } = require('../../../src/utils/auth');
 
 describe('POST /api/auth/token', () => {
@@ -18,11 +18,10 @@ describe('POST /api/auth/token', () => {
 
       const refreshToken = uuidv4();
 
-      const token = {
+      await RefreshToken.create({
         userId,
         refreshToken,
-      };
-      await Token.create(token);
+      });
 
       const payload = {
         user: {
@@ -52,7 +51,7 @@ describe('POST /api/auth/token', () => {
           const uuidV4RegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
           expect(res.body.data.refreshToken).toMatch(uuidV4RegExp);
 
-          expect(await Token.count({ where: { userId } })).toBe(1);
+          expect(await RefreshToken.count({ where: { userId } })).toBe(1);
         });
     });
   });

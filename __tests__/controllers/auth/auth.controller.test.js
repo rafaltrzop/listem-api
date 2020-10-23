@@ -2,7 +2,7 @@ const request = require('supertest');
 const jwt = require('jsonwebtoken');
 
 const app = require('../../../app');
-const { Token, User } = require('../../../src/models');
+const { RefreshToken, User } = require('../../../src/models');
 
 describe('POST /api/auth', () => {
   describe('with correct credentials', () => {
@@ -36,7 +36,7 @@ describe('POST /api/auth', () => {
           const uuidV4RegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
           expect(res.body.data.refreshToken).toMatch(uuidV4RegExp);
 
-          expect(await Token.count({ where: { userId } })).toBe(1);
+          expect(await RefreshToken.count({ where: { userId } })).toBe(1);
         });
     });
   });
