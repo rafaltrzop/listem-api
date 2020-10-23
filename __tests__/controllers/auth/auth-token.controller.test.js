@@ -9,11 +9,12 @@ const { generateAccessToken } = require('../../../src/utils/auth');
 describe('POST /api/auth/token', () => {
   describe('with valid tokens', () => {
     test('should respond with access token and refresh token', async () => {
-      const user = {
-        email: 'test@gmail.com',
-        password: 'Passw0rd!',
-      };
-      const { id: userId } = await User.create(user);
+      const email = 'test@gmail.com';
+      const password = 'Passw0rd!';
+      const { id: userId } = await User.create({
+        email,
+        passwordHash: password,
+      });
 
       const refreshToken = uuidv4();
 

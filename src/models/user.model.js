@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true,
         },
       },
-      password: {
+      passwordHash: {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         async beforeCreate(user) {
           const saltRounds = 12;
           // eslint-disable-next-line no-param-reassign
-          user.password = await bcrypt.hash(user.password, saltRounds);
+          user.passwordHash = await bcrypt.hash(user.passwordHash, saltRounds);
         },
       },
     }
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.prototype.isValidPassword = async function isValidPassword(password) {
     const user = this;
-    return bcrypt.compare(password, user.password);
+    return bcrypt.compare(password, user.passwordHash);
   };
 
   return User;

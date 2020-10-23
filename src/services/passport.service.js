@@ -16,7 +16,7 @@ passport.use(
       try {
         const [user, created] = await User.findOrCreate({
           where: { email },
-          defaults: { password },
+          defaults: { passwordHash: password },
         });
         return done(null, { id: user.id, email: user.email, created });
       } catch (error) {
@@ -37,7 +37,7 @@ passport.use(
       try {
         const user = await User.findOne({
           where: { email },
-          attributes: ['id', 'email', 'password'],
+          attributes: ['id', 'passwordHash'],
         });
 
         if (!user) {

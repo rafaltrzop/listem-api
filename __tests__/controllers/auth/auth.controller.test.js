@@ -7,15 +7,20 @@ const { Token, User } = require('../../../src/models');
 describe('POST /api/auth', () => {
   describe('with correct credentials', () => {
     test('should respond with access token and refresh token', async () => {
-      const user = {
-        email: 'test@gmail.com',
-        password: 'Passw0rd!',
-      };
-      const { id: userId } = await User.create(user);
+      const email = 'test@gmail.com';
+      const password = 'Passw0rd!';
+
+      const { id: userId } = await User.create({
+        email,
+        passwordHash: password,
+      });
 
       return request(app)
         .post('/api/auth')
-        .send(user)
+        .send({
+          email,
+          password,
+        })
         .expect(200)
         .then(async (res) => {
           const { accessToken } = res.body.data;
@@ -38,15 +43,17 @@ describe('POST /api/auth', () => {
 
   describe('with wrong credentials', () => {
     test('should respond with incorrect username or password (wrong password)', async () => {
-      const user = {
-        email: 'test@gmail.com',
-        password: 'Passw0rd!',
-      };
-      await User.create(user);
+      const email = 'test@gmail.com';
+      const password = 'Passw0rd!';
+
+      await User.create({
+        email,
+        passwordHash: password,
+      });
 
       return request(app)
         .post('/api/auth')
-        .send({ ...user, password: 'wrongPassw0rd!' })
+        .send({ email, password: 'wrongPassw0rd!' })
         .expect(401)
         .then((res) => {
           expect(res.body.errors).toHaveLength(1);
