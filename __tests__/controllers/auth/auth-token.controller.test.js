@@ -20,7 +20,7 @@ describe('POST /api/auth/token', () => {
 
       await RefreshToken.create({
         userId,
-        refreshToken,
+        refreshTokenHash: refreshToken,
       });
 
       const payload = {

@@ -33,7 +33,7 @@ module.exports = {
     const isValidRefreshToken = await RefreshToken.destroy({
       where: {
         userId,
-        refreshToken: crypto
+        refreshTokenHash: crypto
           .createHash('sha256')
           .update(refreshToken)
           .digest('hex'),

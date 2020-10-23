@@ -14,7 +14,7 @@ function generateAccessToken(payload) {
 
 async function generateRefreshToken(userId) {
   const token = RefreshToken.build({ userId });
-  const { refreshToken } = token;
+  const { refreshTokenHash: refreshToken } = token;
   await token.save();
 
   return refreshToken;

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'CASCADE',
       },
-      refreshToken: {
+      refreshTokenHash: {
         allowNull: false,
         unique: true,
         type: DataTypes.STRING,
@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         async beforeSave(refreshToken) {
           // eslint-disable-next-line no-param-reassign
-          refreshToken.refreshToken = crypto
+          refreshToken.refreshTokenHash = crypto
             .createHash('sha256')
-            .update(refreshToken.refreshToken)
+            .update(refreshToken.refreshTokenHash)
             .digest('hex');
         },
       },
