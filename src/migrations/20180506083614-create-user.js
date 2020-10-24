@@ -23,6 +23,15 @@ module.exports = {
           notEmpty: true,
         },
       },
+      emailVerificationHash: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
+        defaultValue: Sequelize.UUIDV4,
+        validate: {
+          notEmpty: true,
+        },
+      },
       isActive: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

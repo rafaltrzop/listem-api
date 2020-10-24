@@ -1,5 +1,3 @@
-const { v4: uuidv4 } = require('uuid');
-
 const { RefreshToken, User } = require('../../src/models');
 const {
   deleteExpiredRefreshTokens,
@@ -14,13 +12,11 @@ describe('Delete expired refresh tokens job', () => {
       passwordHash: password,
     });
 
-    const refreshToken = uuidv4();
     const expiryDate = new Date(
       Date.now() - process.env.REFRESH_TOKEN_LIFETIME_DAYS * 24 * 60 * 60 * 1000
     );
     await RefreshToken.create({
       userId,
-      refreshTokenHash: refreshToken,
       createdAt: expiryDate,
     });
 
@@ -37,10 +33,8 @@ describe('Delete expired refresh tokens job', () => {
       passwordHash: password,
     });
 
-    const refreshToken = uuidv4();
     await RefreshToken.create({
       userId,
-      refreshTokenHash: refreshToken,
     });
 
     expect(await RefreshToken.count({ where: { userId } })).toBe(1);

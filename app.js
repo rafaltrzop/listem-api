@@ -4,11 +4,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
+const sgMail = require('@sendgrid/mail');
 
 const app = express();
 require('dotenv').config();
 const routes = require('./src/routes');
 require('./src/services/passport.service');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.use(
   helmet({

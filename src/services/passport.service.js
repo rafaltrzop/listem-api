@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
+const { v4: uuidv4 } = require('uuid');
 
 const { User } = require('../models');
 
@@ -14,11 +15,27 @@ passport.use(
     },
     async (email, password, done) => {
       try {
+        await User.destroy({
+          where: {
+            email,
+            isActive: false,
+          },
+        });
+
+        const emailVerification = uuidv4();
         const [user, created] = await User.findOrCreate({
           where: { email },
-          defaults: { passwordHash: password },
+          defaults: {
+            passwordHash: password,
+            emailVerificationHash: emailVerification,
+          },
         });
-        return done(null, { id: user.id, email: user.email, created });
+
+        return done(null, {
+          created,
+          emailVerification,
+          email: user.email,
+        });
       } catch (error) {
         done(error);
       }

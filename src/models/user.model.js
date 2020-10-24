@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -20,6 +21,15 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      emailVerificationHash: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.UUIDV4,
+        validate: {
+          notEmpty: true,
+        },
+      },
       isActive: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
@@ -32,6 +42,12 @@ module.exports = (sequelize, DataTypes) => {
           const saltRounds = 12;
           // eslint-disable-next-line no-param-reassign
           user.passwordHash = await bcrypt.hash(user.passwordHash, saltRounds);
+
+          // eslint-disable-next-line no-param-reassign
+          user.emailVerificationHash = crypto
+            .createHash('sha256')
+            .update(user.emailVerificationHash)
+            .digest('hex');
         },
       },
     }
